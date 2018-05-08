@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="RecallButton">
+		<div class="control-button view-recall">
+			<i class="fa fa-tag"/>Recall orders</div>
+	</t>
+	<t t-name="RecallOrderLine">
+		<div class="pos-sale-ticket">
+			<t t-as="items" t-foreach="line || {}">
+			<div class="pos-center-align">
+				<strong>
+				<i class="fa fa-clock-o"/>
+				<span><t t-esc="items_value[0] and items_value[0].split(' ')[1] or False"/></span>
+				</strong>
+                <i class="fa fa-user"/>
+				<t t-esc="items_value[2]"/>   
+			   <button class="button recall_state_change highlight" style="background: #6EC8E1 !important;border:1px solid #6EC8E1 !important;" t-att-data-id="items">
+					Recall   
+				</button>			
+			</div>
+			<!-- <br/> -->
+			<div  class="ribbon">
+				<span class="ribbon-content">Recall Order</span>
+			</div>
+			<!-- <br/> -->
+			
+			<table class="receipt-orderlines">
+				<colgroup>
+					<col width="75%"/>
+					<col width="25%"/>
+				</colgroup>
+				
+				<t t-as="product_list" t-foreach="items_value[4] || {}">
+					<t t-as="product_list_line" t-foreach="product_list_value || []">
+						<tr>
+						<td>
+					<t t-esc="product_list_line[0]"/>
+					<t t-if="product_list_line[2]">
+						<!-- <span>with</span> -->
+					<div class="pos-disc-font"> 
+						<t t-as="product_list_dict" t-foreach="product_list_line[2] || {}">
+							<t t-as="product_list_dict_line" t-foreach="product_list_dict || []">
+						       <t t-esc="product_list_dict_line"/>
+                               <t t-esc="product_list_dict_line_value[0]"/>
+						       <br/>
+					</t>
+					    </t>
+					</div>
+				    </t>
+				</td>
+				<td>
+					<t t-esc="product_list_line[1]"/>
+				</td>
+			</tr>
+                 </t>
+				</t>			   
+			</table>
+			<br/>
+		</t>
+		</div>
+	</t>
+	<t t-name="RecallScreen">
+		<div class="splitbill-screen screen">
+			<div class="full-content">
+				<div class="top-content">
+					<span class="button back highlight">
+						<i class="fa fa-angle-double-left"/>Back</span>
+					<span class="button next highlight">
+						View Kitchen<!-- <i class="fa fa-angle-double-right"/> -->
+					</span>
+				</div>
+				<div class="screen left-content">
+					<table>
+						<tr class="content-row">
+							<div>
+								<td class="content-cell">
+									<span class="line_recall"/>
+								</td>
+							</div>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</t>
+</templates>

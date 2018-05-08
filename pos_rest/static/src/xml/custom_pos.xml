@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+  <!-- <t t-extend="ActionpadWidget"><t t-jquery="div.actionpad" t-operation="append"><div><button class='button kitchen'><i class='fa fa-arrows-alt'/>Send To kitchen 
+            </button></div></t></t>-->
+  <t t-extend="PosTicket">
+     <t t-jquery=".receipt-orderlines" t-operation="replace">
+        <table class='receipt-orderlines'>
+                  <colgroup>
+                      <col width='50%' />
+                      <col width='25%' />
+                      <col width='25%' />
+                    <!--   <col width='40%' /> -->
+                  </colgroup>
+                  <tr t-foreach="orderlines" t-as="orderline">
+                      <td>
+                          <t t-esc="orderline.get_product().display_name"/>
+                           <t t-if="orderline.get_discount() > 0">
+                              <div class="pos-disc-font">
+                                  With a <t t-esc="orderline.get_discount()"/>% discount
+                              </div>
+                          </t>
+                          <t t-foreach="orderline.extra_notes || []" t-as="note"> 
+                            <div class="pos-disc-font">
+                            <t t-as="note_dict" t-foreach="note || {}">
+                              <t t-esc="note_dict"/> 
+                              <span>at</span>
+                              <t t-esc="note_dict_value[0]"/>
+                            </t>   
+                            </div>                
+                           
+                      </t>
+                      </td>
+                      <td class="pos-right-align">
+                          <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                      </td>
+                      <td class="pos-right-align">
+                          <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                      </td>
+                  </tr>
+              </table>
+    </t>
+  </t>
+
+  <t t-extend="Orderline">
+    <t t-jquery=".info-list" t-operation="append">
+      <t t-if="line.get_product().visibility_in_pos==true">
+        <i t-attf-class="oe_link_icon fa fa-cutlery oe_icon  line-extra #{line.get_extra_notes().length ? 'oe_green' : 'oe_orange' }"/>
+        
+        <t t-foreach="line.get_extra_notes() || []" t-as="note">
+           <t t-as="note_dict" t-foreach="note || {}">
+              <li class="info">
+                <em>
+               <t t-esc="note_dict"/>
+                </em>
+               at
+               <t t-esc="note_dict_value[0]"/>
+              </li>
+         </t>
+        </t>              
+      </t>
+    </t>
+  </t>
+
+  <t t-name="AddonsSelectionWidget">
+    <div class="modal-dialog">
+      <div class="popup">
+        <p class="title">
+          <t t-esc="widget.options.title || '' "/>
+        </p>
+        <div class="body">
+          <div id="tabs" style="font-size:12px">
+            <ul class="wk_tabs">
+              <t t-as="item" t-foreach="widget.options.multiple_name || []">
+                <t t-as="item_dict" t-foreach="item || {}">
+                  <li class="tab-link" style="font-size: 18px !important;" t-attf-data-id="#tab#{item_dict}">
+                    <b t-attf-data-id="#tab#{item_dict}">
+                      <t t-esc="item_dict"/>
+                    </b>
+                  </li>
+                </t>
+              </t>
+            </ul>
+          </div>
+          <t t-set="i" t-value="0"/>
+          <t t-as="item" t-foreach="widget.options.multiple_name || []">
+            <t t-as="item_dict" t-foreach="item || {}">
+              <div class="tab-content" t-attf-id="tab#{item_dict}">
+                <table class="question">
+                  <tbody>
+                    <t t-as="item_dict_value_list" t-foreach="item_dict_value || []">
+                      <tr class="selection-item" style="height:40px;!important" >
+                        <td style="width:70%">
+                          <t t-esc="item_dict_value_list[1]"/>
+                        </td>
+                        <td style="width:50%">
+                          <t t-esc="widget.format_currency(item_dict_value_list[2])"/>
+                        </td>
+                        <td>
+                          <label class="switch">
+                            <input class="wk_checked_question" type="checkbox" t-att-data-item-index='i'/>
+                            <span class="slider round"/>
+                          </label>
+                        </td>
+                        <t t-set="i" t-value="i+1"/>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+              </div>
+
+            </t>
+          </t>
+        </div>
+        <div class="footer centered">
+          <div class="button cancel" style="background: #868686;color: white;">Cancel 
+        </div>
+          <div class="button confirm" style="background: #6ec89b;color: white;">Ok
+        </div>
+        </div>
+      </div>
+    </div>
+  </t>
+
+</templates>
