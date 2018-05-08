@@ -15,12 +15,12 @@
 				<!-- <t t-esc="items_value[0]" /> -->
 				<span><t t-esc="items_value[0] and items_value[0].split(' ')[1] or False"/></span>
 			   </strong>
-                <i class="fa fa-user"/>
-				<t t-esc="items_value[2]"/> 
 			<button class="button kitchen_state_change highlight" t-att-data-id="items" >
 				Deliver
-				<!-- <span icon="fa fa-user"></span>Deliver	 -->
-		   </button>		
+		   </button>
+		   <br/>		
+                <i class="fa fa-user"/>
+				<t t-esc="items_value[2]"/> 
 			   	
 			</div>
 			<!-- <br/> -->
