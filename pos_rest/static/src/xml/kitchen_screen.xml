@@ -7,7 +7,7 @@
 	
 	<t t-name="KitchenOrderline">
 
-		<div class="pos-sale-ticket">
+		<div class="pos-sale-ticket" >
               <t t-as="items" t-foreach="line || {}">
 			<div class="pos-center-align">
 				<strong>
@@ -47,8 +47,8 @@
 					<div class="pos-disc-font"> 
 						<t t-as="product_list_dict" t-foreach="product_list_line[2] || {}">
 							<t t-as="product_list_dict_line" t-foreach="product_list_dict || []">
-						       <t t-esc="product_list_dict_line"/>
-                               <t t-esc="product_list_dict_line_value[0]"/>
+						    <span> - </span><t t-esc="product_list_dict_line"/>
+                               <!-- <t t-esc="product_list_dict_line_value[0]"/> -->
 						       <br/>
 					</t>
 					    </t>
