@@ -9,18 +9,32 @@ var ScreenWidget = screens.ScreenWidget;
 var rpc = require('web.rpc');
 var QWeb = core.qweb;
 var PosBaseWidget = require('point_of_sale.BaseWidget');
+var chrome = require('point_of_sale.chrome');
+
+
 
 var KitchenScreen = ScreenWidget.extend({
     template: 'KitchenScreen',
-    previous_screen: 'products',
+    // previous_screen: 'products',
     events: _.extend({}, ScreenWidget.prototype.events, {
         'click .kitchen_state_change': 'kitchen_change'
     }),
-    renderElement: function(){
+    start : function () {
+          this._super();
+          this.refresh_page();
+    },
+    refresh_page: function (){
       var self = this;
+        setInterval(function() {
+          self.renderElement();
+        }, 100000);
+    },
+    renderElement: function(){
+      // var self = this;
       this._super();
       var self = this;
       var linewidget;
+      console.log("=======update render Element");
       rpc.query({
                 model: 'pos.order',
                 method: 'search_kitchen_state',
@@ -35,14 +49,15 @@ var KitchenScreen = ScreenWidget.extend({
                     self.$('.line_kitchen').append(linewidget);
                 }
             });
-      this.$('.back').click(function(){
-            self.gui.show_screen(self.previous_screen);
-        });
+      // this.$('.back').click(function(){
+      //       self.gui.show_screen(self.previous_screen);
+      //   });
       this.$('.next').click(function(){
             self.gui.show_screen('RecallScreen');
         });
       
     },
+    
     kitchen_change : function (ev) {
          var $input = $(ev.target),
              cid = $input.attr('data-id');
@@ -59,30 +74,53 @@ var KitchenScreen = ScreenWidget.extend({
 gui.define_screen({
     'name': 'kitchenscreen', 
     'widget': KitchenScreen,
+    // 'condition': function(){
+    //     return this.pos.config.kitchen_screen;
+    // },
     
 });
+
+
 
 var KitchenOrderline = PosBaseWidget.extend({
     template:'KitchenOrderline',  
 });
 
-var KitchenButton = ActionpadWidget.extend({
-    template: 'KitchenButton',
-    button_click: function(){
-    	this.gui.show_screen('kitchenscreen'); 
-    },
-});
-screens.define_action_button({
-    'name': 'KitchenButton',
-    'widget': KitchenButton,
+// var KitchenButton = ActionpadWidget.extend({
+//     template: 'KitchenButton',
+//     button_click: function(){
+//     	this.gui.show_screen('kitchenscreen'); 
+//     },
+// });
+// screens.define_action_button({
+//     'name': 'KitchenButton',
+//     'widget': KitchenButton,
     
+// });
+
+screens.ReceiptScreenWidget.include({
+    click_next: function() {
+        this._super();
+    },
+   });
+
+chrome.Chrome.include({
+    build_widgets: function(){
+        this._super();
+        if (this.pos.config.kitchen_screen) {
+          this.gui.set_startup_screen('kitchenscreen');
+          this.gui.set_default_screen('kitchenscreen');
+        }
+    },
 });
 
 return {
-    KitchenButton: KitchenButton,
+    // KitchenButton: KitchenButton,
     KitchenOrderline:KitchenOrderline,
     KitchenScreen:KitchenScreen,
     
 };
+
+
 
 });

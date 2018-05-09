@@ -140,4 +140,8 @@ class ProductExtra(models.Model):
             multiple_list.append(dict)
         return multiple_list
 
+class PosConfig(models.Model):
+    _inherit = 'pos.config'
 
+    kitchen_screen = fields.Boolean(default=False)
+ 

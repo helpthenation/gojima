@@ -2,6 +2,9 @@
 <templates id="template" xml:space="preserve">
   <!-- <t t-extend="ActionpadWidget"><t t-jquery="div.actionpad" t-operation="append"><div><button class='button kitchen'><i class='fa fa-arrows-alt'/>Send To kitchen 
             </button></div></t></t>-->
+   
+  
+  
   <t t-extend="PosTicket">
      <t t-jquery=".receipt-orderlines" t-operation="replace">
         <table class='receipt-orderlines'>

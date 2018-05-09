@@ -18,6 +18,7 @@ var round_pr = utils.round_precision;
 
 var _super_posmodel = models.PosModel.prototype;
 var _super_orderline = models.Orderline.prototype;
+var session = require('web.session');
 
   posdb.include({
     init: function(options){
@@ -42,12 +43,7 @@ var _super_orderline = models.Orderline.prototype;
       },
     });
 
-  screens.ReceiptScreenWidget.include({
-    click_next: function() {
-        this._super();
-        this.getParent().screens.kitchenscreen.renderElement();
-    },
-   });
+  
 
   models.Orderline = models.Orderline.extend({
     initialize: function (session, attributes) {

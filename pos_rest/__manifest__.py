@@ -4,7 +4,7 @@
 
 {
     'name': 'Restaurant - Gojima',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Restaurant ',
@@ -13,8 +13,10 @@
     'depends': ['point_of_sale'],
     'website': 'https://www.odoo.com/page/point-of-sale',
     'data': [
+        'security/ir.model.access.csv',
         'views/assets.xml',
         'views/product_extra.xml',
+        'views/pos_kitchen.xml',
     ],
     'qweb': [
         'static/src/xml/custom_pos.xml',

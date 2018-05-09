@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-	<t t-name="RecallButton">
+	<!-- <t t-name="RecallButton">
 		<div class="control-button view-recall">
 			<i class="fa fa-tag"/>Recall orders</div>
-	</t>
+	</t> -->
 	<t t-name="RecallOrderLine">
 		<div class="pos-sale-ticket">
 			<t t-as="items" t-foreach="line || {}">
@@ -64,8 +64,9 @@
 		<div class="splitbill-screen screen">
 			<div class="full-content">
 				<div class="top-content">
-					<span class="button back highlight">
-						<i class="fa fa-angle-double-left"/>Back</span>
+					<!-- <span class="button back highlight">
+						<i class="fa fa-angle-double-left"/>Back</span> -->
+						<h1>Recall Order Screen</h1>
 					<span class="button next highlight">
 						View Kitchen<!-- <i class="fa fa-angle-double-right"/> -->
 					</span>

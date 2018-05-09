@@ -35,9 +35,9 @@ var RecallScreen = ScreenWidget.extend({
                     self.$('.line_recall').append(linewidget);
                 }
             });
-      this.$('.back').click(function(){
-            self.gui.show_screen(self.previous_screen);
-        });
+      // this.$('.back').click(function(){
+      //       self.gui.show_screen(self.previous_screen);
+      //   });
       this.$('.next').click(function(){
             self.gui.show_screen('kitchenscreen');
         });
@@ -69,20 +69,20 @@ var RecallOrderLine = PosBaseWidget.extend({
 
 });
 
-var RecallButton = ActionpadWidget.extend({
-    template: 'RecallButton',
-    button_click: function(){
-    	this.gui.show_screen('RecallScreen'); 
-    },
-});
-screens.define_action_button({
-    'name': 'RecallButton',
-    'widget': RecallButton,
+// var RecallButton = ActionpadWidget.extend({
+//     template: 'RecallButton',
+//     button_click: function(){
+//     	this.gui.show_screen('RecallScreen'); 
+//     },
+// });
+// screens.define_action_button({
+//     'name': 'RecallButton',
+//     'widget': RecallButton,
     
-});
+// });
 
 return {
-    RecallButton: RecallButton,
+    // RecallButton: RecallButton,
     RecallOrderLine:RecallOrderLine,
     RecallScreen:RecallScreen,
     

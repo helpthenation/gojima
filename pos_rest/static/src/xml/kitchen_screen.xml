@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-	<t t-name="KitchenButton">
+	<!-- <t t-name="KitchenButton">
 		<div class="control-button view-kitchen">
 			<i class="fa fa-tag"/>View kitchen</div>
-	</t>
+	</t> -->
 	
 	<t t-name="KitchenOrderline">
 
@@ -70,10 +70,11 @@
 		<div class="splitbill-screen screen">
 			<div class="full-content">
 				<div class="top-content">
-					<span class="button back highlight">
-						<i class="fa fa-angle-double-left"/>Back</span>
+					<!-- <span class="button back highlight">
+						<i class="fa fa-angle-double-left"/>Back</span> -->
+						<h1>Kitchen Screen</h1>
 					<span class="button next highlight">
-						Recall Orders<!-- <i class="fa fa-angle-double-right"/> -->
+						View Recall Orders<!-- <i class="fa fa-angle-double-right"/> -->
 					</span>
 					<!-- <h1>Kitchen</h1> -->
 				</div>
@@ -91,4 +92,7 @@
 			</div>
 		</div>
 	</t>
+
+	
+
 </templates>
