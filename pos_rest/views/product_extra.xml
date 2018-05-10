@@ -79,10 +79,10 @@
                 <group string="Extra's">                
                 <field name="extra_line" nolabel="1">
                     <tree editable="bottom" > 
-                        <field name="product_id"/>                              
-                        <field name="internal_refer"/>                             
-                        <field name="qty_on_hand"/>                              
-                        <field name="forecasted_qty"/>                             
+                        <field name="product_id" options="{'no_create': True}"/>                              
+                        <field name="internal_refer" string="Internal Reference"/>                             
+                        <field name="qty_on_hand" invisible="1"/>                              
+                        <field name="forecasted_qty" invisible="1"/>                             
                         <field name="public_price"/>                              
                     </tree>
                 </field>
