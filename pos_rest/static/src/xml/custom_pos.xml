@@ -75,8 +75,8 @@
             <ul class="wk_tabs">
               <t t-as="item" t-foreach="widget.options.multiple_name || []">
                 <t t-as="item_dict" t-foreach="item || {}">
-                  <li class="tab-link" style="font-size: 18px !important;" t-attf-data-id="#tab#{item_dict}">
-                    <b t-attf-data-id="#tab#{item_dict}">
+                  <li class="tab-link" style="font-size: 18px !important;" t-attf-data-id="#tab#{item_dict.replace(' ','_')}">
+                    <b t-attf-data-id="#tab#{item_dict.replace(' ','_')}">
                       <t t-esc="item_dict"/>
                     </b>
                   </li>
@@ -87,7 +87,7 @@
           <t t-set="i" t-value="0"/>
           <t t-as="item" t-foreach="widget.options.multiple_name || []">
             <t t-as="item_dict" t-foreach="item || {}">
-              <div class="tab-content" t-attf-id="tab#{item_dict}">
+              <div class="tab-content" t-attf-id="tab#{item_dict.replace(' ','_')}">
                 <table class="question">
                   <tbody>
                     <t t-as="item_dict_value_list" t-foreach="item_dict_value || []">
