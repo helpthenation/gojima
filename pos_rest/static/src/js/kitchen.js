@@ -199,6 +199,7 @@ var session = require('web.session');
             });
            $('.popup').css({'width':'600px','height':'600px'});
            $('.popup').find(".tab-content").eq(0).addClass("current");
+           $('.popup').find(".tab-link").eq(0).addClass("tab_color");
            var get_extra_notes =  order_line.get_extra_notes();
            if (get_extra_notes.length){
             $('.popup').find('.wk_checked_question').each(function(index, el){
@@ -251,6 +252,9 @@ var AddonsSelectionWidget = PopupWidget.extend({
          cid = $input.attr('data-id');
          $(".current").removeClass('current');
          $(cid).addClass('current');
+         $(".tab_color").removeClass('tab_color');
+         this.$('.tab-link[data-id="' + cid + '"]').addClass('tab_color');
+         
     },
     close: function(){
         this._super();

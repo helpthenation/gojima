@@ -10,7 +10,9 @@ var rpc = require('web.rpc');
 var QWeb = core.qweb;
 var PosBaseWidget = require('point_of_sale.BaseWidget');
 var chrome = require('point_of_sale.chrome');
-
+var ajax = require('web.ajax');
+var time = require('web.time');
+var arr = [];
 
 
 var KitchenScreen = ScreenWidget.extend({
@@ -20,64 +22,92 @@ var KitchenScreen = ScreenWidget.extend({
         'click .kitchen_state_change': 'kitchen_change'
     }),
     start : function () {
-          this._super();
+          this._super();    
+          this.renderElement();
           this.refresh_page();
     },
     refresh_page: function (){
       var self = this;
         setInterval(function() {
-          self.renderElement();
-        }, 100000);
+          self.xyz();
+        }, 1000);
+    },
+    xyz: function(){
+      
+      var self = this;
+      rpc.query({
+                model: 'pos.order',
+                method: 'search_kitchen_state',
+            }).then(function (result) {
+              if (result !== undefined) {
+               for(var i = result.length-1; i >= 0; i--){
+                    var line = result[i];
+                  if (line)
+                  {
+                   if(arr.indexOf(Object.keys(line)[0]) === -1){
+                    var $linewidget = $(QWeb.render('KitchenOrderline',{ 
+                        'widget':self,
+                        'line': line,
+                        'id': Object.keys(line)[0],
+                    }));
+                 arr.push(Object.keys(line)[0]);
+                $linewidget.data('id',line);
+                self.$('.line_kitchen').append($linewidget); 
+               } 
+              }  
+             }
+           }
+             }
+            );
     },
     renderElement: function(){
       // var self = this;
       this._super();
       var self = this;
-      var linewidget;
-      console.log("=======update render Element");
+      var linewidgets;
       rpc.query({
                 model: 'pos.order',
                 method: 'search_kitchen_state',
             }).then(function (result) {
-                for(var i = 0; i < result.length; i++){
+                for(var i = result.length-1; i >= 0; i--){
                     var line = result[i];
-                    linewidget = $(QWeb.render('KitchenOrderline',{ 
-                        widget:self,
-                        line: line,
+                    if(arr.indexOf(Object.keys(line)[0]) === -1){
+                      arr.push(Object.keys(line)[0]);
+                    linewidgets = $(QWeb.render('KitchenOrderline',{ 
+                        'widget':self,
+                        'line': line,
+                        'id': Object.keys(line)[0],
                     }));
-                    linewidget.data('id',line);
-                    self.$('.line_kitchen').append(linewidget);
+                   linewidgets.data('id',line);
+                   self.$('.line_kitchen').append(linewidgets);
+                    } 
                 }
             });
-      // this.$('.back').click(function(){
-      //       self.gui.show_screen(self.previous_screen);
-      //   });
       this.$('.next').click(function(){
             self.gui.show_screen('RecallScreen');
         });
-      
     },
-    
+    kitchen_change_visible: function (cid){
+       var self = this;
+         self.$('.kitchen_state_change[data-id="' + cid + '"]').parent().removeClass('oe_hidden');
+    },
     kitchen_change : function (ev) {
          var $input = $(ev.target),
-             cid = $input.attr('data-id');
+             cid = $input.attr('data-id');    
          rpc.query({
                     model: 'pos.order',
                     method: 'move_next',
                     args: [parseInt(cid, 10)],
-                })              
-         this.renderElement();
-         this.getParent().screens.RecallScreen.renderElement();      
+                })
+
+          $input.parent().addClass('oe_hidden');
+          this.getParent().screens.RecallScreen.recall_change_visible(cid);        
     },
 });
 
 gui.define_screen({
     'name': 'kitchenscreen', 
-    'widget': KitchenScreen,
-    // 'condition': function(){
-    //     return this.pos.config.kitchen_screen;
-    // },
-    
+    'widget': KitchenScreen, 
 });
 
 
@@ -100,7 +130,9 @@ var KitchenOrderline = PosBaseWidget.extend({
 
 screens.ReceiptScreenWidget.include({
     click_next: function() {
+        this.getParent().screens.kitchenscreen.renderElement();
         this._super();
+        debugger;
     },
    });
 

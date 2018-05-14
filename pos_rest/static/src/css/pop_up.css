@@ -6,6 +6,10 @@ padding: 10px 15px;
 cursor: pointer;
 text-align:center !important;
 }
+.tab_color {
+background: #6ec89b !important;
+color: white  !important;
+}
 ul.wk_tabs li::before {
 content: "" !important;
 }
@@ -21,6 +25,7 @@ content: "" !important;
 }
 .tab-content.current {
     display: inherit;
+
 }
 .question {
     text-align: left;
@@ -197,6 +202,7 @@ input:checked + .slider:before {
 }
 .pos .pos-sale-ticket{
   width:244px !important;
+  height:425px !important;
   font-size: 18px !important;
 }
 .pos .pos-disc-font {
