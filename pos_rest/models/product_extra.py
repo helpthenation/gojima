@@ -3,7 +3,8 @@
 
 from odoo import api, fields, models
 from datetime import timedelta
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF ,DEFAULT_SERVER_DATETIME_FORMAT as DFT
+import datetime
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
@@ -54,9 +55,13 @@ class PosOrder(models.Model):
     @api.model
     def search_kitchen_state(self):
         import ast
+        domain = []           
+        #     timeout_ago = datetime.datetime.now()-datetime.timedelta(seconds=500)
+        #     domain = [('create_date', '<', timeout_ago.strftime(DFT))]
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
-        for record in self.search([('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]):
+        domain += [('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]        
+        for record in self.search(domain):
             single_list = []
             id = record.id
             date = record.date_order
@@ -70,13 +75,13 @@ class PosOrder(models.Model):
                 extra_notes = rec.extra_notes
                 if extra_notes:
                     extra_notes = ast.literal_eval(extra_notes)
-                    
                 tup = [product,qty,extra_notes]    
                 single_list.append(tup)
             vals = [{'single': single_list}]
             new_tuple = list + vals
             dict = { id:new_tuple}
             multiple_list.append(dict)
+        print ("=============>>",multiple_list)
         return multiple_list
 
 

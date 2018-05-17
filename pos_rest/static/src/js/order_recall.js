@@ -9,6 +9,7 @@ var ScreenWidget = screens.ScreenWidget;
 var rpc = require('web.rpc');
 var QWeb = core.qweb;
 var PosBaseWidget = require('point_of_sale.BaseWidget');
+var recall_arr = [];
 
 var RecallScreen = ScreenWidget.extend({
     template: 'RecallScreen',
@@ -16,32 +17,74 @@ var RecallScreen = ScreenWidget.extend({
     events: _.extend({}, PosBaseWidget.prototype.events, {
         'click .recall_state_change': 'recall_change'
     }),
-    renderElement: function(){
+    start : function () {
+          this._super();    
+          this.renderElement();
+          this.refresh_page();
+    },
+    refresh_page: function (){
       var self = this;
-      this._super();
+        setInterval(function() {
+          self.xyz();
+        }, 1000);
+    },
+    xyz: function(){ 
       var self = this;
-      var linewidget;
       rpc.query({
                 model: 'pos.order',
                 method: 'search_kitchen_recall_state',
             }).then(function (result) {
-                for(var i = 0; i < result.length; i++){
+              if (result !== undefined) {
+               for(var i = result.length-1; i >= 0; i--){
                     var line = result[i];
-                    linewidget = $(QWeb.render('RecallOrderLine',{ 
-                        widget:self,
-                        line: line,
+                  if (line)
+                  {
+                   if(recall_arr.indexOf(Object.keys(line)[0]) === -1){
+                    var $linewidget = $(QWeb.render('RecallOrderLine',{ 
+                        'widget':self,
+                        'line': line,
+                        'id': Object.keys(line)[0],
                     }));
-                    linewidget.data('id',line);
-                    self.$('.line_recall').append(linewidget);
+                 recall_arr.push(Object.keys(line)[0]);
+                 $linewidget.data('id',line);
+                self.$('.line_recall').append($linewidget); 
+               } 
+              }  
+             }
+           }
+             }
+            );
+    },
+    renderElement: function(){
+      // var self = this;
+      this._super();
+      var self = this;
+      var linewidgets;
+      rpc.query({
+                model: 'pos.order',
+                method: 'search_kitchen_recall_state',
+            }).then(function (result) {
+                for(var i = result.length-1; i >= 0; i--){
+                    var line = result[i];
+                    if(recall_arr.indexOf(Object.keys(line)[0]) === -1){
+                      recall_arr.push(Object.keys(line)[0]);
+                    linewidgets = $(QWeb.render('RecallOrderLine',{ 
+                        'widget':self,
+                        'line': line,
+                        'id': Object.keys(line)[0],
+                    }));
+                   linewidgets.data('id',line);
+                   self.$('.line_recall').append(linewidgets);
+                    } 
                 }
             });
-      // this.$('.back').click(function(){
-      //       self.gui.show_screen(self.previous_screen);
-      //   });
       this.$('.next').click(function(){
             self.gui.show_screen('kitchenscreen');
         });
-      
+    },
+    recall_change_visible: function (cid){
+       var self = this;
+         self.$('.recall_state_change[data-id="' + cid + '"]').parent().removeClass('oe_hidden');
     },
     recall_change : function (ev) {
          var $input = $(ev.target),
@@ -51,9 +94,8 @@ var RecallScreen = ScreenWidget.extend({
                     method: 'move_back',
                     args: [parseInt(cid, 10)],
                 }) 
-            this.renderElement();
-            this.getParent().screens.kitchenscreen.renderElement();
-            // debugger;        
+            $input.parent().addClass('oe_hidden');
+            this.getParent().screens.kitchenscreen.kitchen_change_visible(cid);
     },  
 });
 
