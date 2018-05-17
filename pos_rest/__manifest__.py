@@ -4,7 +4,7 @@
 
 {
     'name': 'Restaurant - Gojima',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Restaurant ',
