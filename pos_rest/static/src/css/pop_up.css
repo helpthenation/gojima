@@ -1,0 +1,210 @@
+ul.wk_tabs li{
+background: #ccc;
+color: #222;
+display: inline-block;
+padding: 10px 15px;
+cursor: pointer;
+text-align:center !important;
+}
+.tab_color {
+background: #6ec89b !important;
+color: white  !important;
+}
+ul.wk_tabs li::before {
+content: "" !important;
+}
+.tab-content {
+    max-height: 550px;
+    overflow-y: scroll;
+    border-top: 3px solid #ededed;
+    border-bottom: 3px solid #ededed;
+    display: none;
+    background: #ededed;
+    padding: 15px;
+
+}
+.tab-content.current {
+    display: inherit;
+
+}
+.question {
+    text-align: left;
+    width: 100%;
+}
+.question .right{
+    text-align: right;
+    width: 50%;
+}
+.question td {
+    padding: 10px 8px;
+    font-size: initial;
+    font-weight: normal;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input {
+    display: none;
+}
+.check_box {
+    background-color: rgb(204, 204, 204);
+    border-bottom-left-radius: 34px;
+    border-bottom-right-radius: 34px;
+    border-collapse: collapse;
+    border-spacing: 0px 0px;
+    border-top-left-radius: 34px;
+    border-top-right-radius: 34px;
+    bottom: 0px;
+    color: rgb(85, 85, 85);
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-color: #ccc;
+    transition: .4s;
+    -webkit-transition: .4s;
+
+}
+.check_box.round::before {
+    border-radius: 50%;
+}
+
+.check_box::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.wk_checked_question
+{
+    min-height: 0px !important;
+    min-width: 0px !important;
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #6ec89b;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #6ec89b;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.pos .popup .body ul, .pos .popup ul.body{
+  text-align: center !important;
+}
+.pos .popup input, .pos .popup-input {
+  display:none;
+}
+.ribbon {
+ font-size: 12px !important;
+ /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+
+ width: 50%;
+    
+ position: relative;
+ background: #ba89b6;
+ color: #fff;
+ text-align: center;
+ padding: 1em 2em; /* Adjust to suit */
+ margin: 2em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
+}
+.ribbon:before, .ribbon:after {
+ content: "";
+ position: absolute;
+ display: block;
+ bottom: -1em;
+ border: 1.5em solid #986794;
+ z-index: -1;
+}
+.ribbon:before {
+ left: -2em;
+ border-right-width: 1.5em;
+ border-left-color: transparent;
+}
+.ribbon:after {
+ right: -2em;
+ border-left-width: 1.5em;
+ border-right-color: transparent;
+}
+.ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
+ content: "";
+ position: absolute;
+ display: block;
+ border-style: solid;
+ border-color: #804f7c transparent transparent transparent;
+ bottom: -1em;
+}
+.ribbon .ribbon-content:before {
+ left: 0;
+ border-width: 1em 0 0 1em;
+}
+.ribbon .ribbon-content:after {
+ right: 0;
+ border-width: 1em 1em 0 0;
+}
+.pos .pos-sale-ticket{
+  width:244px !important;
+  height:425px !important;
+  font-size: 18px !important;
+}
+.pos .pos-disc-font {
+  font-size: 14px !important;
+}
