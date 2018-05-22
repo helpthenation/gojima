@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_pos_form_inherits" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <group name="order_fields" position="after">
+                <group name="pos_extra">
+                    <field name="amount_tax_order"/>
+                    <field name="amount_total_order"/>
+                    <field name="avg_tran_value"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_gojima_report_pos_order_pivot" model="ir.ui.view">
+        <field name="name">gojima.report.pos.order.pivot</field>
+        <field name="model">gojima.report.pos.order</field>
+        <field name="arch" type="xml">
+            <pivot string="POS Analysis" disable_linking="True">
+                <!-- <field name="date" interval="hour" type="row"/> -->
+                <field name="amount_total_order" type="measure"/>
+                <field name="price_total" type="measure"/>
+                <field name="tran_count" type="measure"/>
+                <field name="avg_tran" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_gojima_report_pos_order_search" model="ir.ui.view">
+        <field name="name">gojima.report.pos.order.search</field>
+        <field name="model">gojima.report.pos.order</field>
+        <field name="arch" type="xml">
+            <search string="Point of Sale Analysis">
+                <field name="date"/>
+                <filter string="Hour" context="{'group_by':'date:hour'}"/>
+                <filter string="Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="POS orders created during the current year"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Order Month" context="{'group_by':'date:month'}" help="Month of order date"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="filter_gojima_orders_per_session" model="ir.filters">
+        <field name="name">Per Date</field>
+        <field name="model_id">gojima.report.pos.order</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date'], 'measures': ['price_total']}</field>
+    </record>
+
+    <record id="action_gojima_report_pos_order_all" model="ir.actions.act_window">
+        <field name="name">POS Analysis</field>
+        <field name="res_model">gojima.report.pos.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot</field>
+        <field name="limit">10</field>
+        <field name="search_view_id" ref="view_gojima_report_pos_order_search"/>
+        <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+    </record>
+
+    <menuitem id="menu_gojima_report_pos_order_all" name="Dashboard" action="action_gojima_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="1"/>
+
+    <record id="view_gojima_count_report_pos_order_pivot" model="ir.ui.view">
+        <field name="name">gojima.count.report.pos.order.pivot</field>
+        <field name="model">gojima.count.report.pos.order</field>
+        <field name="arch" type="xml">
+            <pivot string="POS Analysis" disable_linking="True">
+                <field name="date" interval="hour" type="row"/>
+                <field name="tran_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_gojima_count_report_pos_order_graph" model="ir.ui.view">
+        <field name="name">gojima.count.report.pos.order.graph</field>
+        <field name="model">gojima.count.report.pos.order</field>
+        <field name="arch" type="xml">
+            <graph string="Point of Sale Analysis">
+                <field name="product_id" type="row"/>
+                <field name="tran_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_gojima_count_report_pos_order_search" model="ir.ui.view">
+        <field name="name">gojima.count.report.pos.order.search</field>
+        <field name="model">gojima.count.report.pos.order</field>
+        <field name="arch" type="xml">
+            <search string="Point of Sale Analysis">
+                <field name="date"/>
+                <filter string="Hour" context="{'group_by':'date:hour'}"/>
+                <filter string="Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="POS orders created during the current year"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Order Month" context="{'group_by':'date:month'}" help="Month of order date"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="filter_gojima_count_orders_per_session" model="ir.filters">
+        <field name="name">Per Date</field>
+        <field name="model_id">gojima.count.report.pos.order</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date'], 'measures': ['tran_count']}</field>
+    </record>
+
+    <record id="action_gojima_count_report_pos_order_all" model="ir.actions.act_window">
+        <field name="name">POS Analysis</field>
+        <field name="res_model">gojima.count.report.pos.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="limit">10</field>
+        <field name="search_view_id" ref="view_gojima_count_report_pos_order_search"/>
+        <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+    </record>
+
+    <menuitem id="menu_count_gojima_report_pos_order_all" name="POS Count" action="action_gojima_count_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="2"/>
+
+</odoo>
