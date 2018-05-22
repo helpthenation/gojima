@@ -11,6 +11,7 @@
 """,
     'depends': ['point_of_sale', 'base_groupby_extra'],
     'data': [
+        'security/ir.model.access.csv',
         'views/pos_report_views.xml',
     ],
     'qweb': [],
