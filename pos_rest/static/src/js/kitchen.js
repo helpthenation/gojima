@@ -197,7 +197,7 @@ var session = require('web.session');
                     
                   },
             });
-           $('.popup').css({'width':'600px','height':'600px'});
+           $('.popup').css({'width':'600px','height':'769px'});
            $('.popup').find(".tab-content").eq(0).addClass("current");
            $('.popup').find(".tab-link").eq(0).addClass("tab_color");
            var get_extra_notes =  order_line.get_extra_notes();
