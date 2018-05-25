@@ -127,16 +127,12 @@ class PosOrderCountReport(models.Model):
 
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        # import pdb;pdb.set_trace()
         if ['id', '!=', False] in domain:
             top_most = 10
-            self.env.cr.execute('select product_id, count(product_id) as cnt from gojima_count_report_pos_order group by product_id order by cnt desc limit %s' % (top_most))
+            self.env.cr.execute('select product_id, sum(tran_count) as cnt from gojima_count_report_pos_order group by product_id order by cnt desc limit %s' % (top_most))
             so_list = []
             for rec in self.env.cr.fetchall():
-                sol_ids = self.env['gojima.count.report.pos.order'].search([('product_id', '=', rec[0])])
-                so_list.extend(list(set([x.order_id.id for x in sol_ids])))
-            print("so_list : ", so_list)
-            domain.extend([['id', 'in', so_list]])
-            print("domain : ", domain)
+                so_list.append(rec[0])
+            domain.extend([['product_id', 'in', so_list]])
             domain.extend([['company_id', '=', self.env.user.company_id.id]])
         return super(PosOrderCountReport, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
