@@ -11,6 +11,8 @@ class PosOrder(models.Model):
 
     kitchen_state = fields.Selection([('to_delivery','To Delivery'),('delivered', 'Delivered')], default='to_delivery', string="Kitchen")
     trace = fields.Boolean("Trace", default = False)
+    dine_in = fields.Boolean("Dine-in", default = False)
+    takeaway = fields.Boolean("Take away", default = False)
 
     @api.multi
     def move_next(self):
