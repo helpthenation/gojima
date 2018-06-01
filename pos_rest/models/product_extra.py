@@ -90,10 +90,24 @@ class PosOrderLine(models.Model):
     _inherit = 'pos.order.line'
 
     extra_notes = fields.Char("Extras")
+    extra_notes_visible = fields.Text(compute='_compute_extra_notes_visible', store=True)
 
     @api.model
     def search_order(self, order):
         return self.search_read([('order_id','=',order)])
+
+    @api.one
+    @api.depends('extra_notes')
+    def _compute_extra_notes_visible(self):
+        import ast
+        if self.extra_notes and len(self.extra_notes) > 2:
+            product_list = ''
+            for rec in ast.literal_eval(self.extra_notes):
+                for key,value in rec.items():
+                    product_list += key + '' + value[0]
+                    product_list += '\n'
+            self.extra_notes_visible = product_list
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'

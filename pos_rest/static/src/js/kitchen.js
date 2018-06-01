@@ -20,6 +20,9 @@ var _super_posmodel = models.PosModel.prototype;
 var _super_orderline = models.Orderline.prototype;
 var session = require('web.session');
 
+
+
+
   posdb.include({
     init: function(options){
       this.extra_notes = [];
@@ -197,7 +200,7 @@ var session = require('web.session');
                     
                   },
             });
-           $('.popup').css({'width':'600px','height':'769px'});
+           $('.popup').css({'width':'655px','height':'769px'});
            $('.popup').find(".tab-content").eq(0).addClass("current");
            $('.popup').find(".tab-link").eq(0).addClass("tab_color");
            var get_extra_notes =  order_line.get_extra_notes();

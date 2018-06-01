@@ -21,22 +21,25 @@
 					Recall   
 				</button>
 			<!-- <br/> -->
-			<div  class="ribbon">
+			<!-- <div  class="ribbon">
 				<span class="ribbon-content">Recall Order</span>
-			</div>
+			</div> -->
 
 			<!-- <br/> -->
 			
 			<table class="receipt-orderlines">
 				<colgroup>
-					<col width="75%"/>
-					<col width="25%"/>
+					<col width="20%"/>
+					<col width="80%"/>
 				</colgroup>
 				
 				<t t-as="product_list" t-foreach="items_value[4] || {}">
 					<t t-as="product_list_line" t-foreach="product_list_value || []">
 						<tr>
-						<td>
+							<td >
+					<t t-esc="product_list_line[1]"/>
+				           </td>
+						<td >
 					<t t-esc="product_list_line[0]"/>
 					<t t-if="product_list_line[2]">
 						<!-- <span>with</span> -->
@@ -51,9 +54,7 @@
 					</div>
 				    </t>
 				</td>
-				<td>
-					<t t-esc="product_list_line[1]"/>
-				</td>
+				
 			</tr>
                  </t>
 				</t>			   

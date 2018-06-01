@@ -6,7 +6,7 @@
         <field name="model">pos.config</field>
         <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
         <field name="arch" type="xml">
-        	<div class="row mt16 o_settings_container" position="inside">
+        	<div id="category_reference" position="inside">
         		<div class="o_setting_left_pane">
                     <field name="kitchen_screen"/>
                 </div>

@@ -47,7 +47,7 @@
   <t t-extend="Orderline">
     <t t-jquery=".info-list" t-operation="append">
       <t t-if="line.get_product().visibility_in_pos==true">
-        <i t-attf-class="oe_link_icon fa fa-cutlery oe_icon  line-extra #{line.get_extra_notes().length ? 'oe_green' : 'oe_orange' }"/>
+        <i t-attf-class="oe_link_icon fa fa-cutlery oe_icon  line-extra #{line.get_extra_notes().length ? 'oe_green' : 'oe_orange' }" style="font-size: 32px;"/>
         
         <t t-foreach="line.get_extra_notes() || []" t-as="note">
            <t t-as="note_dict" t-foreach="note || {}">
@@ -91,7 +91,7 @@
                 <table class="question">
                   <tbody>
                     <t t-as="item_dict_value_list" t-foreach="item_dict_value || []">
-                      <tr class="selection-item" style="height:40px;!important" >
+                      <tr class="selection-item" style="height:30px;!important" >
                         <td style="width:70%">
                           <t t-esc="item_dict_value_list[1]"/>
                         </td>
@@ -99,7 +99,7 @@
                           <t t-esc="widget.format_currency(item_dict_value_list[2])"/>
                         </td>
                         <td>
-                          <label class="switch">
+                          <label  class="switch">
                             <input class="wk_checked_question" type="checkbox" t-att-data-item-index='i'/>
                             <span class="slider round"/>
                           </label>

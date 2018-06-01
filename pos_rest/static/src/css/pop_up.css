@@ -22,6 +22,7 @@ content: "" !important;
     background: #ededed;
     padding: 15px;
 
+
 }
 .tab-content.current {
     display: inherit;
@@ -40,15 +41,7 @@ content: "" !important;
     font-size: initial;
     font-weight: normal;
 }
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-.switch input {
-    display: none;
-}
+
 .check_box {
     background-color: rgb(204, 204, 204);
     border-bottom-left-radius: 34px;
@@ -208,3 +201,14 @@ input:checked + .slider:before {
 .pos .pos-disc-font {
   font-size: 14px !important;
 }
+.pos *::-webkit-scrollbar {
+    width: 18px !important;
+    height: 20px !important;
+    
+
+    /*overflow: auto !important;*/
+}
+#modified{
+    top: -9px !important;
+}
+
