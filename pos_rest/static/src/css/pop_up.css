@@ -194,9 +194,10 @@ input:checked + .slider:before {
  border-width: 1em 1em 0 0;
 }
 .pos .pos-sale-ticket{
-  width:244px !important;
-  height:425px !important;
+  width:225px !important;
+  height:225px !important;
   font-size: 18px !important;
+  overflow-y: auto;
 }
 .pos .pos-disc-font {
   font-size: 14px !important;
