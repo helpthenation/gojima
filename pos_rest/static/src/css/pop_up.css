@@ -193,7 +193,7 @@ input:checked + .slider:before {
  right: 0;
  border-width: 1em 1em 0 0;
 }
-.pos .pos-sale-ticket{
+#kitchen {
   width:225px !important;
   height:225px !important;
   font-size: 18px !important;

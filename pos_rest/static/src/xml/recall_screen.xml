@@ -5,7 +5,7 @@
 			<i class="fa fa-tag"/>Recall orders</div>
 	</t> -->
 	<t t-name="RecallOrderLine">
-		<div class="pos-sale-ticket">
+		<div class="pos-sale-ticket" id="kitchen">
 			<t t-as="items" t-foreach="line || {}">
 			<div class="pos-center-align">
 				<strong>
