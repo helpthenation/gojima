@@ -38,7 +38,7 @@ class PosOrder(models.Model):
             trace = record.trace
             list = [date,kitchen_state,name,trace]
             for rec in record.lines:
-                product = rec.product_id.name
+                product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty
                 extra_notes = rec.extra_notes
                 if extra_notes:
@@ -70,7 +70,7 @@ class PosOrder(models.Model):
             trace = record.trace
             list = [date,kitchen_state,name,trace]
             for rec in record.lines:
-                product = rec.product_id.name
+                product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty
                 extra_notes = rec.extra_notes
                 if extra_notes:
@@ -113,6 +113,7 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     visibility_in_pos = fields.Boolean('Allow Choosing Extra')
+    kitchen_name = fields.Char("Kitchen Name")
 
 # class ProductExtraLine(models.Model):
 #     _name = 'main.extra.line'
@@ -131,6 +132,7 @@ class ProductExtraLine(models.Model):
     extra_id = fields.Many2one('product.extra', 'Extra')
     product_id = fields.Many2one('product.product','Product')
     internal_refer = fields.Char(related = "product_id.default_code",string='Internal Refer:')
+    kitchen_name = fields.Char(related = "product_id.kitchen_name",string='Kitchen Name')
     qty_on_hand = fields.Float(related = "product_id.qty_available",string='Qty Available')
     forecasted_qty = fields.Float(related = "product_id.virtual_available", string='Qty Forecasted')
     public_price = fields.Float(related = "product_id.lst_price", string='Selling Price')  

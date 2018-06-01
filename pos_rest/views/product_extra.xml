@@ -51,6 +51,7 @@
         <field name="arch" type="xml">
             <field name="barcode" position="after">
                 <field name="visibility_in_pos"/>
+                <field name="kitchen_name"/>
             </field>
         </field>
     </record>
@@ -83,8 +84,9 @@
                 <group string="Extra's">                
                 <field name="extra_line" nolabel="1">
                     <tree editable="bottom" > 
-                        <field name="product_id" options="{'no_create': True}"/>                              
-                        <field name="internal_refer" string="Internal Reference"/>                             
+                        <field name="product_id" options="{'no_create': True}"/> 
+                        <field name="kitchen_name"/>                            
+                        <field name="internal_refer" string="Internal Reference"/>                            
                         <field name="qty_on_hand" invisible="1"/>                              
                         <field name="forecasted_qty" invisible="1"/>                             
                         <field name="public_price"/>                              
