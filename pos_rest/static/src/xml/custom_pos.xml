@@ -127,10 +127,10 @@
   <t t-extend="PaymentScreenWidget">
         <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
             <t t-if='widget.pos.get_order()'>
-                <div t-attf-class='button'>
-                    <i class='fa fa-building'/> Dine-in 
+                <div t-attf-class='button  js_check_dine #{ widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}'>
+                    <i class='fa fa-building' /> Dine-in 
                 </div>
-                <div  t-attf-class='button'>
+                <div  t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}'>
                     <i class='fa fa-car'/> Takeaway
                 </div>
             </t>

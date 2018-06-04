@@ -6,7 +6,7 @@
 	</t> -->
 	
 	<t t-name="KitchenOrderline">
-
+        
 		<div class="pos-sale-ticket" id="kitchen">
               <t t-as="items" t-foreach="line || {}">
 			<div class="pos-center-align">
@@ -17,7 +17,13 @@
 			   </strong>
 			   <br/>	
                 <i class="fa fa-user"/>
-				<t t-esc="items_value[2]"/> 
+				<t t-esc="items_value[2]"/>
+				<t t-if="items_value[4]">
+				   Dine-in
+				</t>
+				<t t-if="items_value[5]">
+				   Take away
+				</t>
 			   	
 			</div>
 			<button class="button kitchen_state_change highlight"  t-att-data-id="items" style="background: #63d08c9 !important;
@@ -38,7 +44,7 @@
 					<col width="80%"/>
 				</colgroup>
 				
-				<t t-as="product_list" t-foreach="items_value[4] || {}">
+				<t t-as="product_list" t-foreach="items_value[6] || {}">
 					<t t-as="product_list_line" t-foreach="product_list_value || []">
 						<tr>
 							<td >

@@ -11,8 +11,15 @@ class PosOrder(models.Model):
 
     kitchen_state = fields.Selection([('to_delivery','To Delivery'),('delivered', 'Delivered')], default='to_delivery', string="Kitchen")
     trace = fields.Boolean("Trace", default = False)
-    dine_in = fields.Boolean("Dine-in", default = False)
-    takeaway = fields.Boolean("Take away", default = False)
+    dine_in = fields.Boolean("Dine-in" , default = False)
+    takeaway = fields.Boolean("Take away" , default = False)
+
+
+    def _order_fields(self, ui_order):
+        res = super(PosOrder, self)._order_fields(ui_order)
+        res['dine_in'] = ui_order['dine_in']
+        res['takeaway'] = ui_order['takeaway']
+        return res
 
     @api.multi
     def move_next(self):
@@ -38,7 +45,9 @@ class PosOrder(models.Model):
             kitchen_state = record.kitchen_state
             name = record.name
             trace = record.trace
-            list = [date,kitchen_state,name,trace]
+            dine_in = record.dine_in
+            takeaway = record.takeaway
+            list = [date,kitchen_state,name,trace,dine_in,takeaway]
             for rec in record.lines:
                 product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty
@@ -70,7 +79,9 @@ class PosOrder(models.Model):
             kitchen_state = record.kitchen_state
             name = record.name
             trace = record.trace
-            list = [date,kitchen_state,name,trace]
+            dine_in = record.dine_in
+            takeaway = record.takeaway
+            list = [date,kitchen_state,name,trace,dine_in,takeaway]
             for rec in record.lines:
                 product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty

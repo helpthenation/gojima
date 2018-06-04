@@ -10,6 +10,7 @@ var posdb = require('point_of_sale.DB');
 var ActionpadWidget = screens.ActionpadWidget;
 var ProductScreenWidget = screens.ProductScreenWidget;
 var PopupWidget = require('point_of_sale.popups');
+var PaymentScreenWidget = screens.PaymentScreenWidget;
 var QWeb = core.qweb;
 
 var utils = require('web.utils');
@@ -32,7 +33,7 @@ var session = require('web.session');
 
   models.load_models({
     model: 'pos.order',
-    fields: ['kitchen_state'],
+    fields: ['kitchen_state','dine_in','takeaway'],
     loaded: function(self, kitchen_state){
         self.kitchen_state = kitchen_state;
       },
@@ -159,8 +160,37 @@ var session = require('web.session');
     var _super_order = models.Order.prototype;
     models.Order = models.Order.extend({
       initialize: function() {
-        _super_order.initialize.apply(this,arguments);
+         this.dine_in = false;
+         this.takeaway = false;
+         return _super_order.initialize.apply(this,arguments);
         },
+       init_from_JSON: function(json) {
+            this.dine_in = json.dine_in;
+            this.takeaway = json.takeaway;
+            return _super_order.init_from_JSON.apply(this, arguments);
+        },
+        export_as_JSON: function(){
+            var json = _super_order.export_as_JSON.call(this);
+            json['dine_in'] = this.dine_in ;
+            json['takeaway'] = this.takeaway ;
+            return json;
+          },
+          set_dine_in_status: function(dine_in){
+            // this.assert_editable();
+            this.dine_in = dine_in;
+            this.trigger('change',this);
+        },
+          get_dine_in_status: function(){
+             return this.dine_in;
+          },
+          set_takeaway_status: function(takeaway){
+            // this.assert_editable();
+            this.takeaway = takeaway;
+            this.trigger('change',this);
+          },
+          get_takeaway_status: function(){
+             return this.takeaway;
+          },
       show_extra_products: function() {
         var This = this;
         var order_line = this.get_selected_orderline();     
@@ -242,6 +272,41 @@ screens.OrderWidget.include({
         
       },
 });
+
+PaymentScreenWidget.include({
+  renderElement: function(){
+      var self = this;
+      this._super();
+      this.$('.js_check_dine').click(function(){
+          self.click_check_dine();
+      });
+      this.$('.js_check_takeaway').click(function(){
+          self.click_check_takeaway();
+      });
+        },
+    click_check_takeaway: function(){
+          var order = this.pos.get_order();
+          order.set_takeaway_status(!order.get_takeaway_status());
+          if (order.get_takeaway_status()) {
+              this.$('.js_check_takeaway').addClass('highlight');
+              
+          } else {
+              this.$('.js_check_takeaway').removeClass('highlight');
+              
+          }
+        },
+      click_check_dine: function(){
+          var order = this.pos.get_order();
+          order.set_dine_in_status(!order.get_dine_in_status());
+          if (order.get_dine_in_status()) {
+              this.$('.js_check_dine').addClass('highlight');
+              
+          } else {
+              this.$('.js_check_dine').removeClass('highlight');
+              
+          }
+        },
+  });
 
 
 var AddonsSelectionWidget = PopupWidget.extend({
