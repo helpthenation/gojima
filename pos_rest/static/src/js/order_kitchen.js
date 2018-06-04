@@ -80,6 +80,17 @@ var KitchenScreen = ScreenWidget.extend({
                     }));
                    linewidgets.data('id',line);
                    self.$('.line_kitchen').append(linewidgets);
+                   var currentDate = new Date();
+                   var difference = moment(currentDate).diff(moment(Object.values(line)[0][0]))
+                   var duration = Math.floor((((difference % 31536000) % 86400) % 3600) / 60);
+                   linewidgets.css("background-color", "white");
+                   
+                    if (duration >= 7 && duration <= 10){
+                   linewidgets.css("background-color", "yellow");
+                   }
+                    if (duration > 10){
+                   linewidgets.css("background-color", "red");
+                    }
                     } 
                 }
             });
@@ -113,7 +124,8 @@ gui.define_screen({
 
 
 var KitchenOrderline = PosBaseWidget.extend({
-    template:'KitchenOrderline',  
+    template:'KitchenOrderline',
+
 });
 
 // var KitchenButton = ActionpadWidget.extend({
