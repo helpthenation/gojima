@@ -212,4 +212,8 @@ input:checked + .slider:before {
 #modified{
     top: -9px !important;
 }
+.pos .pos-sale-ticket{
+  margin-right:40px !important;
+  margin-left:40px !important;
+}
 

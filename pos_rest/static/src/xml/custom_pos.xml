@@ -6,6 +6,10 @@
   
   
   <t t-extend="PosTicket">
+    <t t-jquery="div.receipt-phone" t-operation="replace"/>
+    <t t-jquery="div.receipt-user" t-operation="replace"/>
+    <t t-jquery="t[t-esc='widget.pos.company.name']" t-operation="replace"/>
+    
      <t t-jquery=".receipt-orderlines" t-operation="replace">
         <table class='receipt-orderlines'>
                   <colgroup>

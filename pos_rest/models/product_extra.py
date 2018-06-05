@@ -5,6 +5,7 @@ from odoo import api, fields, models
 from datetime import timedelta
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF ,DEFAULT_SERVER_DATETIME_FORMAT as DFT
 import datetime
+import ast
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
@@ -36,7 +37,6 @@ class PosOrder(models.Model):
     @api.model
     def search_kitchen_recall_state(self):
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
-        import ast
         multiple_list = []
         for record in self.search([('kitchen_state','=','delivered'),('date_order','>=',last_day.strftime(DF))]):
             single_list = []
@@ -53,8 +53,7 @@ class PosOrder(models.Model):
                 qty = rec.qty
                 extra_notes = rec.extra_notes
                 if extra_notes:
-                    extra_notes = ast.literal_eval(extra_notes)
-                    
+                    extra_notes = ast.literal_eval(extra_notes)       
                 tup = [product,qty,extra_notes]    
                 single_list.append(tup)
             vals = [{'single': single_list}]
@@ -64,11 +63,8 @@ class PosOrder(models.Model):
         return multiple_list
 
     @api.model
-    def search_kitchen_state(self):
-        import ast
+    def search_kitchen_state(self): 
         domain = []           
-        #     timeout_ago = datetime.datetime.now()-datetime.timedelta(seconds=500)
-        #     domain = [('create_date', '<', timeout_ago.strftime(DFT))]
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
         domain += [('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]        
@@ -94,7 +90,6 @@ class PosOrder(models.Model):
             new_tuple = list + vals
             dict = { id:new_tuple}
             multiple_list.append(dict)
-        print ("=============>>",multiple_list)
         return multiple_list
 
 
@@ -111,8 +106,7 @@ class PosOrderLine(models.Model):
 
     @api.one
     @api.depends('extra_notes')
-    def _compute_extra_notes_visible(self):
-        import ast
+    def _compute_extra_notes_visible(self):        
         if self.extra_notes and len(self.extra_notes) > 2:
             product_list = ''
             for rec in ast.literal_eval(self.extra_notes):
