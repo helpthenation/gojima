@@ -33,7 +33,6 @@ odoo.define('pos_rest.order_kitchen', function(require) {
       }, 1000);
     },
     xyz: function() {
-
       var self = this;
       rpc.query({
         model: 'pos.order',
