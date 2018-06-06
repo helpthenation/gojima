@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- noupdate="1" -->
+    <data>
+        <record id="credit_card_payment_journal" model="account.journal">
+            <field name="name">Credit Card</field>
+            <field name="code">CC</field>
+            <field name="type">bank</field>
+            <field name="sequence">30</field>
+            <field name="journal_user">True</field>
+            <field name="is_eway_journal">True</field>
+        </record>
+    </data>
+</odoo>
