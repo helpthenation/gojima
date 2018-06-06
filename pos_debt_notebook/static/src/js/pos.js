@@ -22,10 +22,13 @@ odoo.define('pos_debt_notebook.pos', function (require) {
                 return model.model === 'res.partner';
             });
             partner_model.fields.push('debt_type', 'debt', 'debt_limit');
+
             var journal_model = _.find(this.models, function(model){
                 return model.model === 'account.journal';
             });
             journal_model.fields.push('debt');
+            journal_model.fields.push('is_creditcard_journal');
+
             var product_model = _.find(this.models, function(model){
                 return model.model === 'product.product';
             });

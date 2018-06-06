@@ -75,7 +75,6 @@ odoo.define('pos_rest.order_kitchen', function(require) {
                 $linewidget.data('id', line);
                 self.$('.line_kitchen').append($linewidget);
               }
-              console.log("==============", arr);
 
 
             }
