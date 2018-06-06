@@ -6,6 +6,7 @@ from datetime import timedelta
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF ,DEFAULT_SERVER_DATETIME_FORMAT as DFT
 import datetime
 import ast
+import pytz
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
@@ -41,7 +42,8 @@ class PosOrder(models.Model):
         for record in self.search([('kitchen_state','=','delivered'),('date_order','>=',last_day.strftime(DF))]):
             single_list = []
             id = record.id
-            date = record.date_order
+            format_date = fields.Datetime.from_string(record.date_order)
+            date = fields.Datetime.to_string(fields.Datetime.context_timestamp(self, format_date))
             kitchen_state = record.kitchen_state
             name = record.name
             trace = record.trace
@@ -63,7 +65,7 @@ class PosOrder(models.Model):
         return multiple_list
 
     @api.model
-    def search_kitchen_state(self): 
+    def search_kitchen_state(self):
         domain = []           
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
@@ -71,9 +73,11 @@ class PosOrder(models.Model):
         for record in self.search(domain):
             single_list = []
             id = record.id
-            date = record.date_order
             kitchen_state = record.kitchen_state
             name = record.name
+            format_date = fields.Datetime.from_string(record.date_order)
+            date = fields.Datetime.to_string(fields.Datetime.context_timestamp(self, format_date))
+            print ("===============date,id",date)
             trace = record.trace
             dine_in = record.dine_in
             takeaway = record.takeaway

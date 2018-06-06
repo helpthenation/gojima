@@ -41,13 +41,15 @@ odoo.define('pos_rest.order_kitchen', function(require) {
           var $kc = self.$('.kitchen_state_change[data-id="' + arr[i] + '"]').parent();
           var time = $kc.find('#duration').text();
           var currentDate = new Date();
-          var difference = moment(currentDate).diff(moment.utc(time).local());
+          var difference = moment(currentDate).diff(moment(time));
           var duration = Math.floor(difference / 60000);
+          
+          $kc.find('#timer').html($('<span>' + moment.utc(difference).format("HH:mm:ss") + '</span>'));
           $kc.css("background-color", "white");
-          if (duration >= 7 && duration <= 10) {
+          if (duration >= 7 && duration < 10) {
             $kc.css("background-color", "yellow");
           }
-          if (duration > 10) {
+          if (duration >= 10) {
             $kc.css("background-color", "red");
           }
         }

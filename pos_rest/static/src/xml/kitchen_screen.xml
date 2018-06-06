@@ -15,6 +15,7 @@
 				<!-- <t t-esc="items_value[0]" /> -->
 				<span><t t-esc="items_value[0] and items_value[0].split(' ')[1] or False"/></span>
 				<span id="duration" class="oe_hidden"><t t-esc="items_value[0]"/></span>
+				<span id="timer"></span>
 				
 			   </strong>
 			   <br/>	
