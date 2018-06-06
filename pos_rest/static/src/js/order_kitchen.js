@@ -31,6 +31,27 @@ odoo.define('pos_rest.order_kitchen', function(require) {
       setInterval(function() {
         self.xyz();
       }, 1000);
+      setInterval(function() {
+        self.color_change();
+      }, 5000);
+    },
+    color_change: function() {
+      for (var i = arr.length; i >= 0; i--) {
+        if (arr[i]) {
+          var $kc = self.$('.kitchen_state_change[data-id="' + arr[i] + '"]').parent();
+          var time = $kc.find('#duration').text();
+          var currentDate = new Date();
+          var difference = moment(currentDate).diff(moment.utc(time).local());
+          var duration = Math.floor(difference / 60000);
+          $kc.css("background-color", "white");
+          if (duration >= 7 && duration <= 10) {
+            $kc.css("background-color", "yellow");
+          }
+          if (duration > 10) {
+            $kc.css("background-color", "red");
+          }
+        }
+      }
     },
     xyz: function() {
       var self = this;
@@ -52,6 +73,9 @@ odoo.define('pos_rest.order_kitchen', function(require) {
                 $linewidget.data('id', line);
                 self.$('.line_kitchen').append($linewidget);
               }
+              console.log("==============", arr);
+
+
             }
           }
         }
@@ -61,7 +85,7 @@ odoo.define('pos_rest.order_kitchen', function(require) {
       // var self = this;
       this._super();
       var self = this;
-      var linewidgets;
+      var $linewidgets;
       rpc.query({
         model: 'pos.order',
         method: 'search_kitchen_state',
@@ -70,24 +94,15 @@ odoo.define('pos_rest.order_kitchen', function(require) {
           var line = result[i];
           if (arr.indexOf(Object.keys(line)[0]) === -1) {
             arr.push(Object.keys(line)[0]);
-            linewidgets = $(QWeb.render('KitchenOrderline', {
+            $linewidgets = $(QWeb.render('KitchenOrderline', {
               'widget': self,
               'line': line,
               'id': Object.keys(line)[0],
             }));
-            linewidgets.data('id', line);
-            self.$('.line_kitchen').append(linewidgets);
-            var currentDate = new Date();
-            var difference = moment(currentDate).diff(moment.utc(Object.values(line)[0][0]).local());
-            var duration = Math.floor(difference / 60000);
-            linewidgets.css("background-color", "white");
-            if (duration >= 7 && duration <= 10) {
-              linewidgets.css("background-color", "yellow");
-            }
-            if (duration > 10) {
-              linewidgets.css("background-color", "red");
-            }
+            $linewidgets.data('id', line);
+            self.$('.line_kitchen').append($linewidgets);
           }
+
         }
       });
       this.$('.next').click(function() {
