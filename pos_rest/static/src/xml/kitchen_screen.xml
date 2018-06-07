@@ -31,7 +31,7 @@
 					<br/>
 				</t>
 
-				<t t-set="listdata" t-value="['Main','Drinks','Deserts','Sides','Uncategorized']"/>		
+				<t t-set="listdata" t-value="['Mains','Drinks','Desserts','Sides','Uncategorized']"/>		
                 <t t-as="list" t-foreach="listdata">
 				<table class="receipt-orderlines">
 					<colgroup>
