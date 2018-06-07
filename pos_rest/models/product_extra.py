@@ -90,8 +90,12 @@ class PosOrder(models.Model):
                 if extra_notes:
                     extra_notes = ast.literal_eval(extra_notes)
                 root_category = 'uncategorized'
-                if rec.product_id.pos_categ_id and rec.product_id.pos_categ_id.parent_id and rec.product_id.pos_categ_id.parent_id.parent_id:
-                   root_category = rec.product_id.pos_categ_id.parent_id.parent_id.name 
+                if rec.product_id.pos_categ_id:
+                    root_category = rec.product_id.pos_categ_id.name
+                    if rec.product_id.pos_categ_id and rec.product_id.pos_categ_id.parent_id:
+                        root_category = rec.product_id.pos_categ_id.parent_id.name
+                        if rec.product_id.pos_categ_id and rec.product_id.pos_categ_id.parent_id and rec.product_id.pos_categ_id.parent_id.parent_id:
+                            root_category = rec.product_id.pos_categ_id.parent_id.parent_id.name 
                 root_category = root_category.capitalize()
                 tup = [product,qty,extra_notes,root_category]
                 single_list.append(tup)
