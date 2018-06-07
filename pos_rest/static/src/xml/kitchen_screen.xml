@@ -31,19 +31,21 @@
 					<br/>
 				</t>
 
-				<t t-set="listdata" t-value="['Main','Drinks','Deserts','Sides','Uncategorized']"/>
-				<t t-set="counter" t-value="0"/>
+				<t t-set="listdata" t-value="['Main','Drinks','Deserts','Sides','Uncategorized']"/>		
                 <t t-as="list" t-foreach="listdata">
-                    <t t-esc="list"/>
 				<table class="receipt-orderlines">
 					<colgroup>
 						<col width="20%"/>
 						<col width="80%"/>
 					</colgroup>
 					<t t-as="product_list" t-foreach="items_value[6] || {}">
+						<t t-set="counter" t-value="1"/>
 						<t t-as="product_list_line" t-foreach="product_list_value || []">
-							
 							<t t-if="list == product_list_line[3]">
+								<t t-if="counter">
+								  <t t-esc="list"/>
+								</t>
+                            	<t t-set="counter" t-value="0"/>
 							<tr>
 								<td>
 									<t t-esc="product_list_line[1]"/>
