@@ -55,7 +55,8 @@ class PosOrder(models.Model):
                 qty = rec.qty
                 extra_notes = rec.extra_notes
                 if extra_notes:
-                    extra_notes = ast.literal_eval(extra_notes)       
+                    extra_notes = ast.literal_eval(extra_notes)
+
                 tup = [product,qty,extra_notes]    
                 single_list.append(tup)
             vals = [{'single': single_list}]
@@ -77,7 +78,7 @@ class PosOrder(models.Model):
             name = record.name
             format_date = fields.Datetime.from_string(record.date_order)
             date = fields.Datetime.to_string(fields.Datetime.context_timestamp(self, format_date))
-            print ("===============date,id",date)
+            
             trace = record.trace
             dine_in = record.dine_in
             takeaway = record.takeaway
@@ -88,12 +89,17 @@ class PosOrder(models.Model):
                 extra_notes = rec.extra_notes
                 if extra_notes:
                     extra_notes = ast.literal_eval(extra_notes)
-                tup = [product,qty,extra_notes]    
+                root_category = 'uncategorized'
+                if rec.product_id.pos_categ_id and rec.product_id.pos_categ_id.parent_id and rec.product_id.pos_categ_id.parent_id.parent_id:
+                   root_category = rec.product_id.pos_categ_id.parent_id.parent_id.name 
+                root_category = root_category.capitalize()
+                tup = [product,qty,extra_notes,root_category]
                 single_list.append(tup)
             vals = [{'single': single_list}]
             new_tuple = list + vals
             dict = { id:new_tuple}
             multiple_list.append(dict)
+        print ("===============root",multiple_list)
         return multiple_list
 
 
