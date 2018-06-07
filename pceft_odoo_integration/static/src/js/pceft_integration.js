@@ -22,9 +22,9 @@ odoo.define('pceft_odoo_integration.pceft_integration', function(require) {
   		        $.ajax('http://127.0.0.1:5000?'+amount+'&purchase').then(function(result) {
                   var result = JSON.parse(result)
                   console.log('result ', result, result['Response']);
-                  if(result['Response']['ResponseStatus'] != false){
+                  if(result['Response']['ResponseStatus'] != "FALSE"){
                     arguments[0] = id;
-                    var res = _super_payment.click_paymentmethods.apply(self,arguments, true);
+                    var res = _super_payment.click_paymentmethods.apply(self, arguments, true);
                     return res;                    
                   } else{
                     self.gui.show_popup('error', {
