@@ -122,11 +122,7 @@
                               <tr>
                       <td>
                           <t t-esc="orderline.get_product().display_name"/>
-                           <t t-if="orderline.get_discount() > 0">
-                              <div class="pos-disc-font">
-                                  With a <t t-esc="orderline.get_discount()"/>% discount
-                              </div>
-                          </t>
+                           
                           <t t-foreach="orderline.extra_notes || []" t-as="note"> 
                             <div class="pos-disc-font">
                             <t t-as="note_dict" t-foreach="note || {}">
@@ -139,7 +135,7 @@
                       </t>
                       </td>
                       <td class="pos-right-align">
-                          <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                          <t t-esc="orderline.get_quantity_str_with_unit().split('.')[0]"/>
                       </td>
                   </tr>
                   <t t-esc="orderline.set_selected_product(false)"/>
