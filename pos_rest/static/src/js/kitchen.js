@@ -52,6 +52,9 @@ odoo.define('pos_rest.kitchen', function(require) {
     initialize: function(session, attributes) {
       this.extra_notes = [];
       this.extra_notes_string = '';
+      this.category_selected = true;
+      this.count = true;
+      this.select = false;
       return _super_orderline.initialize.call(this, session, attributes);
     },
     export_as_JSON: function() {
@@ -92,6 +95,38 @@ odoo.define('pos_rest.kitchen', function(require) {
         return price;
       }
     },
+    get_category : function(){
+        var product = this.product.pos_categ_id[1].split('/')[0];
+        return (product ? this.product.pos_categ_id[1].split('/')[0] : undefined) || 'UnCategorised Product';
+   },
+   get_category_id: function(){
+        var db = this.pos.db;
+        var ancestors_ids = db.get_category_ancestors_ids(this.product.pos_categ_id[0])[1];
+        return ancestors_ids;
+   },
+   set_selected_product: function(count){
+            this.count = count;
+            this.trigger('change',this);
+   },
+   set_selected_category: function(selected){
+
+        this.category_selected = selected;
+        this.trigger('change',this);
+   },
+   is_selected_product: function(){
+        return this.count;
+   },
+   set_select: function(selected){
+        this.select = selected;
+        this.trigger('change',this);
+   },
+   is_select: function(){
+        return this.select;
+
+   },
+   is_selected_category: function(){
+        return this.category_selected;
+   },
     compute_all: function(taxes, price_unit, quantity, currency_rounding, no_map_tax) {
       var self = this,
         list_taxes = [],
