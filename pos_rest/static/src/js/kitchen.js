@@ -232,7 +232,7 @@ odoo.define('pos_rest.kitchen', function(require) {
         var product = order_line.get_product();
         rpc.query({
             model: 'product.extra',
-            method: 'method_in_extra',
+            method: 'get_extra',
             args: [
               [product.id]
             ],
