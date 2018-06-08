@@ -26,7 +26,7 @@ odoo.define('pos_rest.order_recall', function(require) {
       var self = this;
       setInterval(function() {
         self.xyz();
-      }, 1000);
+      }, 3000);
     },
     xyz: function() {
       var self = this;
