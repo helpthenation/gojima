@@ -105,9 +105,14 @@
         <p style="page-break-before:always;"> </p>
         <div class="pos-sale-ticket">   
             <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/></div>
+                <t t-set="counter" t-value="1"/>
                 <t t-foreach="orderlines" t-as="l">
                     <t t-if="l.is_selected_product">
                       <table>
+                        <colgroup>
+                    <col width="75%"/>
+                    <col width='25%' />
+                </colgroup>
                   <tr t-foreach="orderlines" t-as="orderline">
                     <t t-if="orderline.is_selected_product()">
                       <tr>
@@ -121,18 +126,17 @@
                               
                               <tr>
                       <td>
-                          <t t-esc="orderline.get_product().display_name"/>
+                          <t t-esc="counter"/> <span>) </span><t t-esc="orderline.get_product().display_name"/>
                            
                           <t t-foreach="orderline.extra_notes || []" t-as="note"> 
-                            <div class="pos-disc-font">
+                            <div class="pos-disc-font" style="margin-left: 32px;!important">
                             <t t-as="note_dict" t-foreach="note || {}">
-                              <t t-esc="note_dict"/> 
-                              <span>at</span>
-                              <t t-esc="note_dict_value[0]"/>
+                             <span>-</span> <t t-esc="note_dict"/> 
+                              
                             </t>   
                             </div>                
-                           
                       </t>
+                            <t t-set="counter" t-value="counter+1"/>
                       </td>
                       <td class="pos-right-align">
                           <t t-esc="orderline.get_quantity_str_with_unit().split('.')[0]"/>
