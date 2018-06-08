@@ -25,17 +25,12 @@ odoo.define('pos_rest.order_recall', function(require) {
     refresh_page: function() {
       var self = this;
       setInterval(function() {
-        self.xyz();
+        self.renderSingleElement();
       }, 3000);
     },
-    xyz: function() {
-      var self = this;
-      rpc.query({
-        model: 'pos.order',
-        method: 'search_kitchen_recall_state',
-      }).then(function(result) {
-        if (result !== undefined) {
-          for (var i = result.length - 1; i >= 0; i--) {
+    append_line_widget: function (result){
+      var $linewidget;
+    for (var i = result.length - 1; i >= 0; i--) {
             var line = result[i];
             if (line) {
               if (recall_arr.indexOf(Object.keys(line)[0]) === -1) {
@@ -50,6 +45,15 @@ odoo.define('pos_rest.order_recall', function(require) {
               }
             }
           }
+    },
+    renderSingleElement: function() {
+      var self = this;
+      rpc.query({
+        model: 'pos.order',
+        method: 'search_kitchen_recall_state',
+      }).then(function(result) {
+        if (result !== undefined) {
+          self.append_line_widget(result);
         }
       });
     },
@@ -62,19 +66,7 @@ odoo.define('pos_rest.order_recall', function(require) {
         model: 'pos.order',
         method: 'search_kitchen_recall_state',
       }).then(function(result) {
-        for (var i = result.length - 1; i >= 0; i--) {
-          var line = result[i];
-          if (recall_arr.indexOf(Object.keys(line)[0]) === -1) {
-            recall_arr.push(Object.keys(line)[0]);
-            linewidgets = $(QWeb.render('RecallOrderLine', {
-              'widget': self,
-              'line': line,
-              'id': Object.keys(line)[0],
-            }));
-            linewidgets.data('id', line);
-            self.$('.line_recall').append(linewidgets);
-          }
-        }
+        self.append_line_widget(result);
       });
       this.$('.next').click(function() {
         self.gui.show_screen('kitchenscreen');
