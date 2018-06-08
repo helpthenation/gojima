@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_line_form_extra" model="ir.ui.view">
+        <field name="name">POS orders</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field invisible="1" name="extra_notes"/>
+                <field name="extra_notes_visible" string="Extra's"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_pos_line_tree_extra" model="ir.ui.view">
+        <field name="name">POS orders</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field invisible="1" name="extra_notes"/>
+                <field name="extra_notes_visible" string="Extra's"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_pos_pos_form_extra" model="ir.ui.view">
+        <field name="name">POS orders</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="kitchen_state"/>
+            </field>
+            <xpath expr="//field[@name='lines']//form//field[@name='product_id']" position="after">
+                <field invisible="1" name="extra_notes"/>
+                <field name="extra_notes_visible" string="Extra's"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']//tree/field[@name='product_id']" position="after">
+                <field invisible="1" name="extra_notes"/>
+                <field name="extra_notes_visible" string="Extra's"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
