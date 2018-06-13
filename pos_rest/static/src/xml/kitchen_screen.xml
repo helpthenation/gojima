@@ -23,6 +23,9 @@
 				</t>
 					<t t-if="items_value[5]">Take away
 				</t>
+				  <t t-if="items_value[6]">
+				  	Customer/Table :<t t-esc="items_value[6]"/>
+				</t>
 				</div>
 				<button class="button kitchen_state_change highlight" style="background: #63d08c9 !important;               border:1px solid #63d08c9 !important;               margin:auto !important ;display:block !important;margin-top:10px !important;" t-att-data-id="items">Deliver
 		   </button>
@@ -38,7 +41,7 @@
 						<col width="20%"/>
 						<col width="80%"/>
 					</colgroup>
-					<t t-as="product_list" t-foreach="items_value[6] || {}">
+					<t t-as="product_list" t-foreach="items_value[7] || {}">
 						<t t-set="counter" t-value="1"/>
 						<t t-as="product_list_line" t-foreach="product_list_value || []">
 							<t t-if="list == product_list_line[3]">

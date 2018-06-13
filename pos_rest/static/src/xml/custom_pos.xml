@@ -5,7 +5,11 @@
    
        <t t-name="PosTicket">
         <div class="pos-sale-ticket">   
-            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/></div>
+            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/>
+            <t t-if="order.get_customer_table()">
+              Customer/Table No.<t t-esc="order.get_customer_table()"/>
+            </t>
+            </div>
            <!--  <br />
             <t t-esc="widget.pos.company.name"/><br /> -->
             <!-- <div class="receipt-phone">
@@ -104,7 +108,12 @@
         </div>
         <p style="page-break-before:always;"> </p>
         <div class="pos-sale-ticket">   
-            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/></div>
+            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/>
+            <t t-if="order.get_customer_table()">
+               
+              Customer/Table No.<t t-esc="order.get_customer_table()"/>
+            </t>
+            </div>
                 <t t-set="co" t-value="1"/>
                 <t t-foreach="orderlines" t-as="l">
                     <t t-if="l.is_selected_product">
@@ -235,6 +244,23 @@
     </div>
   </t>
 
+  <t t-name="PopupCustomerTable">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 230px;width: 400px;!important">
+                <p class="title">
+                    <t t-esc="widget.options.title || '' "/>
+                </p>
+                <textarea autofocus="autofocus" type="text" class="customer_table"/>
+                 <div class="footer centered">
+                <div class="button cancel" style="background: #868686;color: white;">Cancel 
+              </div>
+                <div class="button confirm" style="background: #6ec89b;color: white;">Ok
+              </div>
+        </div>
+            </div>
+        </div>
+    </t>
+
   <t t-extend="PaymentScreenWidget">
         <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
             <t t-if='widget.pos.get_order()'>
@@ -243,6 +269,10 @@
                 </div>
                 <div  t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}'>
                     <i class='fa fa-car'/> Takeaway
+                </div>
+                <div  t-attf-class='button js_customer_table #{ widget.pos.get_order().get_customer_table() ? "highlight" : ""}'>
+                    <i class='fa fa-table'/>
+                     Customer/Table No.
                 </div>
             </t>
         </t>

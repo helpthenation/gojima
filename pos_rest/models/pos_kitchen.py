@@ -20,12 +20,14 @@ class PosOrder(models.Model):
     trace = fields.Boolean("Trace", default = False)
     dine_in = fields.Boolean("Dine-in" , default = False)
     takeaway = fields.Boolean("Take away" , default = False)
+    customer_table = fields.Char("Table No/Customer")
 
 #added new fields and save it values in pos
     def _order_fields(self, ui_order):
         res = super(PosOrder, self)._order_fields(ui_order)
         res['dine_in'] = ui_order['dine_in']
         res['takeaway'] = ui_order['takeaway']
+        res['customer_table'] = ui_order['customer_table']
         return res
 
 #For state changing and tracibility of recall order
@@ -72,11 +74,9 @@ class PosOrder(models.Model):
 
     @api.model
     def search_kitchen_state(self):
-        domain = []           
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
-        domain += [('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]        
-        for record in self.search(domain):
+        for record in self.search([('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]):
             single_list = []
             id = record.id
             kitchen_state = record.kitchen_state
@@ -86,7 +86,8 @@ class PosOrder(models.Model):
             trace = record.trace
             dine_in = record.dine_in
             takeaway = record.takeaway
-            list = [date,kitchen_state,name,trace,dine_in,takeaway]
+            customer_table = record.customer_table
+            list = [date,kitchen_state,name,trace,dine_in,takeaway,customer_table]
             for rec in record.lines:
                 product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty
