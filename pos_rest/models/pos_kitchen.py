@@ -88,7 +88,7 @@ class PosOrder(models.Model):
             takeaway = record.takeaway
             customer_table = record.customer_table
             list = [date,kitchen_state,name,trace,dine_in,takeaway,customer_table]
-            for rec in record.lines:
+            for rec in record.lines.sorted(key=lambda r: r.sequence):
                 product = rec.product_id.kitchen_name or rec.product_id.name
                 qty = rec.qty
                 extra_notes = rec.extra_notes
@@ -115,6 +115,20 @@ class PosOrderLine(models.Model):
 
     extra_notes = fields.Char("Extras")
     extra_notes_visible = fields.Text(compute='_compute_extra_notes_visible', store=True)
+    sequence = fields.Integer(default=100)
+
+    @api.model
+    def create(self, vals):
+        if vals.get('product_id'):
+            product = self.env['product.product'].browse(vals['product_id'])
+            if product.pos_categ_id:
+                vals['sequence'] = product.pos_categ_id.sequence
+                if product.pos_categ_id and product.pos_categ_id.parent_id:
+                    vals['sequence'] = product.pos_categ_id.parent_id.sequence
+                    if product.pos_categ_id and product.pos_categ_id.parent_id and product.pos_categ_id.parent_id.parent_id:
+                        vals['sequence'] = product.pos_categ_id.parent_id.parent_id.sequence
+        return super(PosOrderLine, self).create(vals)
+
 
     @api.model
     def search_order(self, order):
