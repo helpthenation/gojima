@@ -110,12 +110,12 @@
         <div class="pos-sale-ticket">   
             <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/>
             <t t-if="order.get_customer_table()">
-               
               Customer/Table No.<t t-esc="order.get_customer_table()"/>
             </t>
             </div>
-                <t t-set="co" t-value="1"/>
+                
                 <t t-foreach="orderlines" t-as="l">
+                   <t t-set="co" t-value="1"/>
                     <t t-if="l.is_selected_product">
                       <table>
                         <colgroup>
@@ -123,6 +123,7 @@
                     <col width='25%' />
                 </colgroup>
                   <tr t-foreach="orderlines" t-as="orderline">
+
                     <t t-if="orderline.is_selected_product()">
                       <tr>
                         <t t-if="l.get_category_id()==orderline.get_category_id()">
