@@ -41,7 +41,7 @@ odoo.define('pos_rest.order_kitchen', function(require) {
           var $kc = self.$('.kitchen_state_change[data-id="' + arr[i] + '"]').parent();
           var time = $kc.find('#duration').text();
           var currentDate = new Date();
-          var difference = moment(currentDate).diff(moment(time));
+          var difference = moment(currentDate).diff(moment(time,"YYYY-MM-DD HH:mm:ss"));
           var duration = Math.floor(difference / 60000);
           $kc.find('#timer').html($('<span>' + moment.utc(difference).format("HH:mm:ss") + '</span>'));
           $kc.css("background-color", "white");
