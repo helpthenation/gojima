@@ -96,8 +96,13 @@ odoo.define('pos_rest.kitchen', function(require) {
           }
         },
         get_category: function() {
+          if (this.product.pos_categ_id){
           var product = this.product.pos_categ_id[1].split('/')[0];
           return (product ? this.product.pos_categ_id[1].split('/')[0] : undefined) || 'UnCategorised Product';
+         }
+         else{
+          return 'UnCategorised Product';
+         }
         },
         get_category_id: function() {
           var db = this.pos.db;

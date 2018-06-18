@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
+
+<t t-extend="Chrome">
+    <t t-jquery=".pos-logo" t-operation="replace">
+      <img class="pos-logo" src="/pos_rest/static/description/image.png" />
+    </t>
+  </t>
+
+  <t t-extend="AppSwitcher.Content">
+     <t t-jquery='.o_application_switcher_footer' t-operation="replace">
+        <div class="o_application_switcher_footer">
+              <img src="/pos_rest/static/description/image.png"/>
+          </div>
+      </t>
+    </t>
+
+
   <!-- <t t-extend="ActionpadWidget"><t t-jquery="div.actionpad" t-operation="append"><div><button class='button kitchen'><i class='fa fa-arrows-alt'/>Send To kitchen 
             </button></div></t></t>-->
    
@@ -121,7 +137,7 @@
                         <colgroup>
                     <col width="75%"/>
                     <col width='25%' />
-                </colgroup>
+                        </colgroup>
                   <tr t-foreach="orderlines" t-as="orderline">
 
                     <t t-if="orderline.is_selected_product()">
