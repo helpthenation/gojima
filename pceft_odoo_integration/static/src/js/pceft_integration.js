@@ -19,6 +19,7 @@ odoo.define('pceft_odoo_integration.pceft_integration', function(require) {
             var is_creditcard_journal = _.find(journals, function(jnl){console.log("jnl",jnl);
                                                                        console.log("jnl id",jnl.id);
                                                                        console.log("id",id);
+                                                                       console.log("jnl.is_creditcard_journal",jnl.is_creditcard_journal);
                                                                        return jnl.id==id && jnl.is_creditcard_journal === true;});
             
 
