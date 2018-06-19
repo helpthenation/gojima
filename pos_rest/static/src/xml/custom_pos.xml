@@ -122,8 +122,8 @@
                 </div>
             </t>
         </div>
-        <p style="page-break-before:always;"> </p>
-        <div class="pos-sale-ticket">   
+       <!--  <p style="page-break-before:always;"> </p> -->
+        <!-- <div class="pos-sale-ticket">   
             <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/>
             <t t-if="order.get_customer_table()">
               Customer/Table No.<t t-esc="order.get_customer_table()"/>
@@ -178,7 +178,7 @@
             </t>
             </t>
             <br />
-        </div>
+        </div> -->
     </t>
 
   <t t-extend="Orderline">
