@@ -9,7 +9,6 @@ odoo.define("merge_products_pos.products", function(require) {
           product: product
         });
       } else {
-        // debugger;
         var self = this;
         var order = self.pos.get_order();
         var lines = order.orderlines.models;
@@ -22,8 +21,20 @@ odoo.define("merge_products_pos.products", function(require) {
               flag = true;
             }
           }
-          // }
-
+          if (lines[i].product.visibility_in_pos) {
+            debugger;
+          var to_merge_orderline;
+            for (var j = parseInt(i) + 1; j < lines.length; j++) {  
+              if (JSON.stringify(lines[i].product.display_name) === JSON.stringify(lines[j].product.display_name)
+               && JSON.stringify(lines[i].extra_notes) === JSON.stringify(lines[j].extra_notes)) {
+               to_merge_orderline =  lines[i];
+              }
+              if (to_merge_orderline){
+                 to_merge_orderline.merge(lines[j]);
+                 order.remove_orderline(lines[j])
+              } 
+            }
+          }
         }
         if (!flag) {
           order.add_product(product);
