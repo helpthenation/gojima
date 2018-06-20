@@ -158,8 +158,8 @@ odoo.define('pos_rest.order_kitchen', function(require) {
 
   return {
     // KitchenButton: KitchenButton,
-    KitchenOrderline: KitchenOrderline,
     KitchenScreen: KitchenScreen,
+    KitchenOrderline: KitchenOrderline,
 
   };
 
