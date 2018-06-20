@@ -51,6 +51,14 @@
                 <tr t-foreach="orderlines" t-as="orderline">
                     <td>
                         <t t-esc="orderline.get_product().display_name"/>
+                         <t t-foreach="orderline.extra_notes || []" t-as="note"> 
+                            <div class="pos-disc-font" style="margin-left: 32px;!important">
+                            <t t-as="note_dict" t-foreach="note || {}">
+                             <span>-</span> <t t-esc="note_dict"/> 
+                              
+                            </t>   
+                            </div>                
+                      </t>
                          <t t-if="orderline.get_discount() > 0">
                             <div class="pos-disc-font">
                                 With a <t t-esc="orderline.get_discount()"/>% discount
