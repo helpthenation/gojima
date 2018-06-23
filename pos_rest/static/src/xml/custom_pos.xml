@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
+  <t t-extend="XmlReceipt">
+    <t t-jquery="receipt" t-operation="attributes">
+        <attribute name="margin">30px</attribute>
+    </t>
+  </t>
+
+
 <t t-extend="Chrome">
     <t t-jquery=".pos-logo" t-operation="replace">
       <img class="pos-logo" src="/pos_rest/static/description/image_pos.png" />
