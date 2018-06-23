@@ -62,7 +62,7 @@
                             <div class="pos-disc-font" style="margin-left: 32px;!important">
                             <t t-as="note_dict" t-foreach="note || {}">
                              <span>-</span> <t t-esc="note_dict"/> 
-                              
+                               at <t t-esc="note_dict_value[0]"/>
                             </t>   
                             </div>                
                       </t>
