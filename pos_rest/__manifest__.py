@@ -10,7 +10,7 @@
     'summary': 'Restaurant ',
     'description': """
 """,
-    'depends': ['point_of_sale'],
+    'depends': ['pos_restaurant'],
     'website': 'https://www.odoo.com/page/point-of-sale',
     'data': [
         'security/ir.model.access.csv',

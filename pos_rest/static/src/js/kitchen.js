@@ -392,6 +392,16 @@ odoo.define('pos_rest.kitchen', function(require) {
             renderElement: function() {
               var self = this;
               this._super();
+              this.$('.next').off('click');
+              this.$('.next').click(function(){ 
+                  self.validate_order();
+                  var order = self.pos.get_order();
+                  if(order.hasChangesToPrint()){
+                      order.printChanges();
+                      order.saveChanges();
+                  }
+              });
+
               this.$('.js_check_dine').click(function() {
                 self.click_check_dine();
               });

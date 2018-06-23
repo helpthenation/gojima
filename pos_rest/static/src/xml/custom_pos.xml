@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
+    <t t-name="SubmitOrderButton">
+        <span class="control-button order-submit oe_hidden">
+            <i class="fa fa-cutlery"></i>
+            Order
+        </span>
+    </t>
+
   <t t-extend="XmlReceipt">
     <t t-jquery="receipt" t-operation="attributes">
         <attribute name="margin">30px</attribute>
@@ -293,7 +300,15 @@
         </div>
     </t>
 
+   
+
   <t t-extend="PaymentScreenWidget">
+       <t t-jquery=".button.next" t-operation="replace">
+           <span class='button next'>
+                Pay
+            <i class='fa fa-angle-double-right'></i>
+            </span>
+        </t>
         <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
             <t t-if='widget.pos.get_order()'>
                 <div t-attf-class='button  js_check_dine #{ widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}'>
