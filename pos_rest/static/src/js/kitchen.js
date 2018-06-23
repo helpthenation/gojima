@@ -282,7 +282,7 @@ odoo.define('pos_rest.kitchen', function(require) {
                   });
                   $('.popup').css({
                     'width': '655px',
-                    'height': '769px'
+                    'height': '550px'
                   });
                   $('.popup').find(".tab-content").eq(0).addClass("current");
                   $('.popup').find(".tab-link").eq(0).addClass("tab_color");

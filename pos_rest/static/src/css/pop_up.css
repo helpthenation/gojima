@@ -14,7 +14,8 @@ ul.wk_tabs li::before {
 content: "" !important;
 }
 .tab-content {
-    max-height: 550px;
+   /* max-height: 550px;*/
+    max-height: 312px;
     overflow-y: scroll;
     border-top: 3px solid #ededed;
     border-bottom: 3px solid #ededed;
@@ -23,6 +24,10 @@ content: "" !important;
     padding: 15px;
 
 
+}
+
+.pos .popup .body {
+    overflow: hidden;
 }
 .tab-content.current {
     display: inherit;
