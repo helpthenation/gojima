@@ -404,13 +404,33 @@ odoo.define('pos_rest.kitchen', function(require) {
 
               this.$('.js_check_dine').click(function() {
                 self.click_check_dine();
+                self.click_uncheck_takeaway();
               });
               this.$('.js_check_takeaway').click(function() {
                 self.click_check_takeaway();
+                self.click_uncheck_dine();
               });
               this.$('.js_customer_table').click(function() {
                 self.click_customer_table();
               });
+            },
+            click_uncheck_takeaway: function() {
+                var order = this.pos.get_order();
+                order.set_takeaway_status(!order.get_dine_in_status());
+                if (order.get_takeaway_status()) {
+                this.$('.js_check_takeaway').addClass('highlight');
+              } else {
+                this.$('.js_check_takeaway').removeClass('highlight');
+              }
+            },
+            click_uncheck_dine: function() {
+                var order = this.pos.get_order();
+                order.set_dine_in_status(!order.get_takeaway_status());
+                if (order.get_dine_in_status()) {
+                this.$('.js_check_dine').addClass('highlight');
+              } else {
+                this.$('.js_check_dine').removeClass('highlight');
+              }
             },
             click_check_takeaway: function() {
               var order = this.pos.get_order();
