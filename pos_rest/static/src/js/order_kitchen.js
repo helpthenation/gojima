@@ -30,7 +30,7 @@ odoo.define('pos_rest.order_kitchen', function(require) {
       var self = this;
       setInterval(function() {
         self.renderSingleElement();
-      }, 1000);
+      }, 8000);
       setInterval(function() {
         self.color_change();
       }, 5000);

@@ -26,7 +26,7 @@ odoo.define('pos_rest.order_recall', function(require) {
       var self = this;
       setInterval(function() {
         self.renderSingleElement();
-      }, 3000);
+      }, 8000);
     },
     append_line_widget: function (result){
       var $linewidget;
