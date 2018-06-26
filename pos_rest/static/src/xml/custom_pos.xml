@@ -300,9 +300,17 @@
         </div>
     </t>
 
+    <t t-extend="ActionpadWidget">
+          <t t-jquery="button:first" t-operation="attributes">
+            <attribute name="class">oe_hidden</attribute>
+          </t>
+    </t>
    
 
   <t t-extend="PaymentScreenWidget">
+      <t t-jquery=".js_set_customer" t-operation="attributes">
+              <attribute name="class">oe_hidden</attribute>
+          </t>
        <t t-jquery=".button.next" t-operation="replace">
            <span class='button next'>
                 Pay
