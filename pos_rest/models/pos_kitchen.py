@@ -53,7 +53,7 @@ class PosOrder(models.Model):
             format_date = fields.Datetime.from_string(record.date_order)
             date = fields.Datetime.to_string(fields.Datetime.context_timestamp(self, format_date))
             kitchen_state = record.kitchen_state
-            name = record.name
+            name = record.pos_reference
             trace = record.trace
             dine_in = record.dine_in
             takeaway = record.takeaway
@@ -80,7 +80,7 @@ class PosOrder(models.Model):
             single_list = []
             id = record.id
             kitchen_state = record.kitchen_state
-            name = record.name
+            name = record.pos_reference
             format_date = fields.Datetime.from_string(record.date_order)
             date = fields.Datetime.to_string(fields.Datetime.context_timestamp(self, format_date))
             trace = record.trace
