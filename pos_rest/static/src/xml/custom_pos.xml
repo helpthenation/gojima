@@ -308,10 +308,10 @@
 
           <t t-jquery="button:first" t-operation="after">
           <button t-attf-class='button js_check_dine #{ 
-          widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}' style="height:37%">
+          widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}' style="width:50%;float:left; !important">
            <i class='fa fa-building' /> Dine-in
             </button>
-            <button t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}' style="height:37%">
+            <button t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}' style="width:50%;float:right; !important">
              <i class='fa fa-car'/> Takeaway
             </button>
     </t>
