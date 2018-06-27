@@ -12,7 +12,12 @@
     <t t-jquery="receipt" t-operation="attributes">
         <attribute name="margin">30px</attribute>
     </t>
+    <t t-jquery='.cashier' t-operation='append'>
+        <t t-if="receipt.customer_table">
+          Customer/Table No.<t t-esc="receipt.customer_table"/>
+        </t>
   </t>
+</t>
 
 
 <t t-extend="Chrome">
