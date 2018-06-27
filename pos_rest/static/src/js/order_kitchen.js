@@ -126,23 +126,12 @@ odoo.define('pos_rest.order_kitchen', function(require) {
 
   });
 
-  // var KitchenButton = ActionpadWidget.extend({
-  //     template: 'KitchenButton',
-  //     button_click: function(){
-  //     	this.gui.show_screen('kitchenscreen'); 
-  //     },
-  // });
-  // screens.define_action_button({
-  //     'name': 'KitchenButton',
-  //     'widget': KitchenButton,
-
-  // });
+  
 
   screens.ReceiptScreenWidget.include({
     click_next: function() {
       this.getParent().screens.kitchenscreen.renderElement();
       this._super();
-      debugger;
     },
   });
 

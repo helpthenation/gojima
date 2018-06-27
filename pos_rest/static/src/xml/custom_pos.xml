@@ -34,10 +34,6 @@
       </t>
     </t>
 
-
-  <!-- <t t-extend="ActionpadWidget"><t t-jquery="div.actionpad" t-operation="append"><div><button class='button kitchen'><i class='fa fa-arrows-alt'/>Send To kitchen 
-            </button></div></t></t>-->
-   
        <t t-name="PosTicket">
         <div class="pos-sale-ticket">   
             <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/>
@@ -309,6 +305,16 @@
           <t t-jquery="button:first" t-operation="attributes">
             <attribute name="class">oe_hidden</attribute>
           </t>
+
+          <t t-jquery="button:first" t-operation="after">
+          <button t-attf-class='button js_check_dine #{ 
+          widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}' style="height:37%">
+           <i class='fa fa-building' /> Dine-in
+            </button>
+            <button t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}' style="height:37%">
+             <i class='fa fa-car'/> Takeaway
+            </button>
+    </t>
     </t>
    
 
@@ -324,12 +330,6 @@
         </t>
         <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
             <t t-if='widget.pos.get_order()'>
-                <div t-attf-class='button  js_check_dine #{ widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}'>
-                    <i class='fa fa-building' /> Dine-in 
-                </div>
-                <div  t-attf-class='button js_check_takeaway #{ widget.pos.get_order().get_takeaway_status() ? "highlight" : ""}'>
-                    <i class='fa fa-car'/> Takeaway
-                </div>
                 <div  t-attf-class='button js_customer_table #{ widget.pos.get_order().get_customer_table() ? "highlight" : ""}'>
                     <i class='fa fa-table'/>
                      Customer/Table No.
