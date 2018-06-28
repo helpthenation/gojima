@@ -180,4 +180,6 @@ input:checked + .slider:before {
   text-decoration: underline;
 }
 
-
+.pos .numpad button{
+  height:69px !important;
+}
