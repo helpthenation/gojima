@@ -22,6 +22,9 @@ odoo.define('pos_rest.kitchen', function(require) {
       var session = require('web.session');
 
     ActionpadWidget.include({
+      events: _.extend({}, ActionpadWidget.prototype.events, {
+        'keydown': 'add_customer_table',
+        }),
       renderElement: function() {
         var self = this;
         this._super();
@@ -33,6 +36,19 @@ odoo.define('pos_rest.kitchen', function(require) {
           self.click_check_takeaway();
             self.click_uncheck_dine();
           });
+      },
+      add_customer_table : function (ev){
+        if (ev.keyCode === $.ui.keyCode.ENTER){
+           var $input = $(ev.target),
+              customer_table = $input.val(),
+              order = this.pos.get_order();
+        if (!order.get_customer_table()) {
+            // var customer_table = self.$('textarea[name=js_customer_table]').val();
+              if (customer_table){
+                  order.set_customer_table(customer_table);  
+                }
+            }
+      }
       },
       click_check_dine: function() {
               var order = this.pos.get_order();
@@ -445,49 +461,49 @@ odoo.define('pos_rest.kitchen', function(require) {
 
               
               
-              this.$('.js_customer_table').click(function() {
-                self.click_customer_table();
-              });
+              // this.$('.js_customer_table').click(function() {
+              //   self.click_customer_table();
+              // });
             },
-            click_customer_table: function() {
-              var This = this;
-              var order = This.pos.get_order();
-              var customer_table = order.get_customer_table();
+            // click_customer_table: function() {
+            //   var This = this;
+            //   var order = This.pos.get_order();
+            //   var customer_table = order.get_customer_table();
 
-              // order.set_customer_table(!customer_table);
-              This.gui.show_popup('PopupCustomerTable', {
-                'title': 'Customer/Table No.',
-                'confirm': function(value) {
-                  if (!order.get_customer_table()) {
-                    customer_table =  this.$('.customer_table').val();
-                    order.set_customer_table(customer_table); 
-                    This.$('.js_customer_table').addClass('highlight');     
-                  }
-                  else {
-                     This.$('.customer_table').val = customer_table;
-                     This.$('.js_customer_table').addClass('highlight');
-                  }
-                },
-                'cancel': function() {
-                  // customer_table = '';
-                  order.set_customer_table(!customer_table);
-                  This.$('.js_customer_table').removeClass('highlight');
-                },
-              });
-            },
+            //   // order.set_customer_table(!customer_table);
+            //   This.gui.show_popup('PopupCustomerTable', {
+            //     'title': 'Customer/Table No.',
+            //     'confirm': function(value) {
+            //       if (!order.get_customer_table()) {
+            //         customer_table =  this.$('.customer_table').val();
+            //         order.set_customer_table(customer_table); 
+            //         This.$('.js_customer_table').addClass('highlight');     
+            //       }
+            //       else {
+            //          This.$('.customer_table').val = customer_table;
+            //          This.$('.js_customer_table').addClass('highlight');
+            //       }
+            //     },
+            //     'cancel': function() {
+            //       // customer_table = '';
+            //       order.set_customer_table(!customer_table);
+            //       This.$('.js_customer_table').removeClass('highlight');
+            //     },
+            //   });
+            // },
              });
 
-              var PopupCustomerTable = PopupWidget.extend({
-                template: 'PopupCustomerTable',
-                show: function(options) {
-                  this._super(options);
-                },
+              // var PopupCustomerTable = PopupWidget.extend({
+              //   template: 'PopupCustomerTable',
+              //   show: function(options) {
+              //     this._super(options);
+              //   },
 
-              });
-              gui.define_popup({
-                name: 'PopupCustomerTable',
-                widget: PopupCustomerTable
-              });
+              // });
+              // gui.define_popup({
+              //   name: 'PopupCustomerTable',
+              //   widget: PopupCustomerTable
+              // });
 
               // return PopupCustomerTable;
 

@@ -302,8 +302,8 @@
     </t>
 
     <t t-extend="ActionpadWidget">
-          <t t-jquery="button:first" t-operation="attributes">
-            <attribute name="class">oe_hidden</attribute>
+          <t t-jquery="button:first" t-operation="replace">
+           <textarea autofocus="autofocus" type="text"  placeholder="Customer/Table No." style="width: 163px;height: 37px; !important" name="js_customer_table"/>
           </t>
 
           <t t-jquery="button:first" t-operation="after">
@@ -328,14 +328,16 @@
             <i class='fa fa-angle-double-right'></i>
             </span>
         </t>
-        <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
-            <t t-if='widget.pos.get_order()'>
-                <div  t-attf-class='button js_customer_table #{ widget.pos.get_order().get_customer_table() ? "highlight" : ""}'>
+    </t>
+        <!-- <t t-jquery="t[t-if*='widget.pos.config.iface_invoicing']" t-operation="after">
+            <t t-if='widget.pos.get_order()'> -->
+              <!-- <textarea autofocus="autofocus" type="text"  placeholder="Customer/Table No." style="width: 300px;height: 57px; !important" name="js_customer_table"/> -->
+             <!--  </textarea> -->
+                <!-- <div  t-attf-class='button js_customer_table #{ widget.pos.get_order().get_customer_table() ? "highlight" : ""}'>
                     <i class='fa fa-table'/>
                      Customer/Table No.
-                </div>
-            </t>
-        </t>
-    </t>
+                </div> -->
+           <!--  </t> -->
+        <!-- </t> -->
 
 </templates>
