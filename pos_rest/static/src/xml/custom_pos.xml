@@ -284,7 +284,7 @@
     </div>
   </t>
 
-  <t t-name="PopupCustomerTable">
+  <!-- <t t-name="PopupCustomerTable">
         <div class="modal-dialog">
             <div class="popup popup-textinput" style="height: 230px;width: 400px;!important">
                 <p class="title">
@@ -299,7 +299,7 @@
         </div>
             </div>
         </div>
-    </t>
+    </t> -->
 
     <t t-extend="ActionpadWidget">
           <t t-jquery="button:first" t-operation="replace">

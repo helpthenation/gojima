@@ -13,6 +13,8 @@ odoo.define('pos_rest.kitchen', function(require) {
       var PaymentScreenWidget = screens.PaymentScreenWidget;
       var QWeb = core.qweb;
 
+      var _t = core._t;
+
       var utils = require('web.utils');
       var round_di = utils.round_decimals;
       var round_pr = utils.round_precision;
@@ -22,9 +24,9 @@ odoo.define('pos_rest.kitchen', function(require) {
       var session = require('web.session');
 
     ActionpadWidget.include({
-      events: _.extend({}, ActionpadWidget.prototype.events, {
-        'keydown': 'add_customer_table',
-        }),
+      // events: _.extend({}, ActionpadWidget.prototype.events, {
+      //   'keydown': 'add_customer_table',
+      //   }),
       renderElement: function() {
         var self = this;
         this._super();
@@ -36,19 +38,53 @@ odoo.define('pos_rest.kitchen', function(require) {
           self.click_check_takeaway();
             self.click_uncheck_dine();
           });
-      },
-      add_customer_table : function (ev){
-        if (ev.keyCode === $.ui.keyCode.ENTER){
-           var $input = $(ev.target),
-              customer_table = $input.val(),
-              order = this.pos.get_order();
-        if (!order.get_customer_table()) {
-            // var customer_table = self.$('textarea[name=js_customer_table]').val();
-              if (customer_table){
-                  order.set_customer_table(customer_table);  
-                }
+        // this.$('.pay').off('click');
+        this.$('.pay').click(function(){
+            var order = self.pos.get_order();
+            self.merge_orderlines(order);
+            // if (!order.get_customer_table()) {
+            var customer_table = self.$('textarea[name=js_customer_table]').val();
+            if (customer_table){
+                order.set_customer_table(customer_table);
+                self.$('textarea[name=js_customer_table]').val('');  
+              }
+            else {
+              self.gui.show_popup('error',_t('Customer Name/Table  Is Required'));      
             }
-      }
+        });
+      },
+      // add_customer_table : function (ev){
+      //   if (ev.keyCode === $.ui.keyCode.ENTER){
+      //      var $input = $(ev.target),
+      //         customer_table = $input.val(),
+      //         order = this.pos.get_order();
+      //   if (!order.get_customer_table()) {
+      //       // var customer_table = self.$('textarea[name=js_customer_table]').val();
+      //         if (customer_table){
+      //             order.set_customer_table(customer_table);  
+      //           }
+      //       }
+      // }
+      // },
+      merge_orderlines : function (order) {
+              // var order = self.pos.get_order();
+            var lines = order.orderlines.models;
+            var flag = false;
+            for (var i in lines) {
+                if (lines[i].product.visibility_in_pos) {
+                    var to_merge_orderline;
+                    for (var j = parseInt(i) + 1; j < lines.length; j++) {
+                      if (JSON.stringify(lines[i].product.display_name) === JSON.stringify(lines[j].product.display_name) &&
+                        JSON.stringify(lines[i].extra_notes) === JSON.stringify(lines[j].extra_notes)) {
+                        to_merge_orderline = lines[i];
+                      if (to_merge_orderline) {
+                        to_merge_orderline.merge(lines[j]);
+                        order.remove_orderline(lines[j])
+                      }
+                      }
+                    }
+                  }
+                }
       },
       click_check_dine: function() {
               var order = this.pos.get_order();
