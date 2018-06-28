@@ -267,7 +267,6 @@ odoo.define('pos_debt_notebook.pos', function (require) {
             }
         },
         validate_order: function(options) {
-            console.log('validate_order 1', options);
             var currentOrder = this.pos.get_order();
             var isDebt = currentOrder.updates_debt();
             var is_sponsoredpayment = currentOrder.updates_debt();
@@ -310,11 +309,8 @@ odoo.define('pos_debt_notebook.pos', function (require) {
             //     });
             //     return;
             // }
-            console.log('isDebt ', round_pr(currentOrder.get_total_paid(),0.20), 'currentOrder.get_total_with_tax() ', currentOrder.get_total_with_tax());
-            console.log(isDebt && round_pr(currentOrder.get_total_paid(),0.20) >= currentOrder.get_total_with_tax());
             
             if (isDebt && round_pr(currentOrder.get_total_paid(),this.pos.currency.rounding) > round_pr(currentOrder.get_total_with_tax(),this.pos.currency.rounding)) {
-               console.log('toDebt ', round_pr(currentOrder.get_total_paid(),this.pos.currency.rounding), 'currentOrder.get_total_with_tax() ', currentOrder.get_total_with_tax());
                 this.gui.show_popup('error', {
                     'title': _t('Unable to return the change with a debt payment method'),
                     'body': _t('Please enter the exact or lower debt amount than the cost of the order.')
