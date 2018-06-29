@@ -82,6 +82,7 @@ odoo.define('pos_rest.kitchen', function(require) {
         this.$('.pay').click(function(event){    
             var order = self.pos.get_order();
             self.merge_orderlines(order);
+
             // if (!order.get_customer_table()) {
             var customer_table = self.$('textarea[name=js_customer_table]').val();
             if (customer_table){
@@ -91,6 +92,9 @@ odoo.define('pos_rest.kitchen', function(require) {
               }
             else {
                 self.gui.show_popup('error',_t('Customer Name/Table  Is Required'));
+            }
+            if (!order.get_takeaway_status() && !order.get_dine_in_status()){
+                self.gui.show_popup('error',_t('Take away/Dine not selected'));
             }
         });
       },
@@ -526,6 +530,7 @@ odoo.define('pos_rest.kitchen', function(require) {
             renderElement: function() {
               var self = this;
               this._super();
+              
               this.$('.next').off('click');
               this.$('.next').click(function(){ 
                   self.validate_order();
