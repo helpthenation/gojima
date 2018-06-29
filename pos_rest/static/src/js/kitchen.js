@@ -78,18 +78,19 @@ odoo.define('pos_rest.kitchen', function(require) {
           self.click_check_takeaway();
             self.click_uncheck_dine();
           });
-        // this.$('.pay').off('click');
-        this.$('.pay').click(function(){
+        this.$('.pay').off('click');
+        this.$('.pay').click(function(event){    
             var order = self.pos.get_order();
             self.merge_orderlines(order);
             // if (!order.get_customer_table()) {
             var customer_table = self.$('textarea[name=js_customer_table]').val();
             if (customer_table){
                 order.set_customer_table(customer_table);
-                self.$('textarea[name=js_customer_table]').val('');  
+                self.$('textarea[name=js_customer_table]').val(''); 
+                self.gui.show_screen('payment'); 
               }
             else {
-              self.gui.show_popup('error',_t('Customer Name/Table  Is Required'));      
+                self.gui.show_popup('error',_t('Customer Name/Table  Is Required'));
             }
         });
       },
