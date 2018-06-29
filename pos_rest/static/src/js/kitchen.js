@@ -84,10 +84,14 @@ odoo.define('pos_rest.kitchen', function(require) {
         this.$('.pay').click(function(event){    
             var order = self.pos.get_order();
             self.merge_orderlines(order);
+
             var customer_table = self.$('textarea[name=js_customer_table]').val();
             if (customer_table && (order.get_takeaway_status() || order.get_dine_in_status())){
                 order.set_customer_table(customer_table);
                 self.gui.show_screen('payment');
+                self.$('textarea[name=js_customer_table]').val('');
+                self.$('.js_check_dine').removeClass('highlight');
+                self.$('.js_check_takeaway').removeClass('highlight');
               }
             else {
                 self.gui.show_popup('error',_t('Mandatory Field is not filled'));
@@ -510,13 +514,14 @@ odoo.define('pos_rest.kitchen', function(require) {
               };
             },
             renderElement: function() {
+              // debugger;
               var self = this;
               this._super();
               this.$('.next').off('click');
               this.$('.next').click(function(){ 
                   self.validate_order();
                   var order = self.pos.get_order();
-                  // debugger;
+                  debugger;
 
                   // order.set_dine_in_status(false);
                   // order.set_takeaway_status(false);
