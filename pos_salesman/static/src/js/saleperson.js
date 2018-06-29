@@ -5,6 +5,7 @@ odoo.define('pos_salesman.saleperson', function(require) {
     var screens = require('point_of_sale.screens');
     var gui = require('point_of_sale.gui');
     var models = require('point_of_sale.models');
+    var rpc = require('web.rpc');
 
     var QWeb = core.qweb;
 
@@ -32,9 +33,14 @@ odoo.define('pos_salesman.saleperson', function(require) {
             return json;
         },
         set_sale_person: function(sale_person_id) {
-            // debugger;
             this.sale_person_id = sale_person_id.id;
             this.trigger('change', this);
+        },
+        get_sale_person_name: function() {
+            if (this.sale_person_id){
+            return this.pos.db.get_partner_by_id(this.sale_person_id).name;
+            }
+             return false;
         },
         get_sale_person: function() {
             if (this.sale_person_id){
@@ -64,7 +70,6 @@ odoo.define('pos_salesman.saleperson', function(require) {
             var user = order.sale_person_id;
             if (user) {
                 var partner = this.pos.db.get_partner_by_id(user);
-                // debugger;
                 return partner.name;
             } else {
                 return "Salesman";

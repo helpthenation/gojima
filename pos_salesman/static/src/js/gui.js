@@ -40,13 +40,7 @@ odoo.define('pos_salesman.pos', function (require) {
             });
     
             return def.then(function(user){
-                // if (options.security && user !== options.current_user && user.pos_security_pin) {
-                //     return self.ask_password(user.pos_security_pin).then(function(){
-                //         return user;
-                //     });
-                // } else {
                     return user;
-                // }
             });
         }
     });

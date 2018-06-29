@@ -9,4 +9,13 @@
             </span>
         </span>
     </t>
+
+    <t t-extend="PosTicket">
+      <t t-jquery="t[t-esc='order.name']" t-operation="after">
+       <t t-if="order.get_sale_person_name()">
+              Sale Person :<t t-esc="order.get_sale_person_name()"/>
+        </t>
+       </t>
+    </t>
+    
 </templates>

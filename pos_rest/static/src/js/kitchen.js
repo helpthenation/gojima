@@ -67,9 +67,11 @@ odoo.define('pos_rest.kitchen', function(require) {
       // events: _.extend({}, ActionpadWidget.prototype.events, {
       //   'keydown': 'add_customer_table',
       //   }),
+      
       renderElement: function() {
         var self = this;
         this._super();
+
         this.$('.js_check_dine').click(function() {
                self.click_check_dine();
                self.click_uncheck_takeaway();
@@ -82,37 +84,17 @@ odoo.define('pos_rest.kitchen', function(require) {
         this.$('.pay').click(function(event){    
             var order = self.pos.get_order();
             self.merge_orderlines(order);
-
-            // if (!order.get_customer_table()) {
             var customer_table = self.$('textarea[name=js_customer_table]').val();
-            if (customer_table){
+            if (customer_table && (order.get_takeaway_status() || order.get_dine_in_status())){
                 order.set_customer_table(customer_table);
-                self.$('textarea[name=js_customer_table]').val(''); 
-                self.gui.show_screen('payment'); 
+                self.gui.show_screen('payment');
               }
             else {
-                self.gui.show_popup('error',_t('Customer Name/Table  Is Required'));
-            }
-            if (!order.get_takeaway_status() && !order.get_dine_in_status()){
-                self.gui.show_popup('error',_t('Take away/Dine not selected'));
+                self.gui.show_popup('error',_t('Mandatory Field is not filled'));
             }
         });
       },
-      // add_customer_table : function (ev){
-      //   if (ev.keyCode === $.ui.keyCode.ENTER){
-      //      var $input = $(ev.target),
-      //         customer_table = $input.val(),
-      //         order = this.pos.get_order();
-      //   if (!order.get_customer_table()) {
-      //       // var customer_table = self.$('textarea[name=js_customer_table]').val();
-      //         if (customer_table){
-      //             order.set_customer_table(customer_table);  
-      //           }
-      //       }
-      // }
-      // },
       merge_orderlines : function (order) {
-              // var order = self.pos.get_order();
             var lines = order.orderlines.models;
             var flag = false;
             for (var i in lines) {
@@ -530,11 +512,16 @@ odoo.define('pos_rest.kitchen', function(require) {
             renderElement: function() {
               var self = this;
               this._super();
-              
               this.$('.next').off('click');
               this.$('.next').click(function(){ 
                   self.validate_order();
                   var order = self.pos.get_order();
+                  // debugger;
+
+                  // order.set_dine_in_status(false);
+                  // order.set_takeaway_status(false);
+                  // order.set_customer_table('');
+
                   if(order.hasChangesToPrint()){
                       order.printChanges();
                       order.saveChanges();
