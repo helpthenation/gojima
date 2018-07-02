@@ -8,7 +8,7 @@
         </span>
     </t>
 
-  <t t-extend="XmlReceipt">
+ <!--  <t t-extend="XmlReceipt">
     <t t-jquery="receipt" t-operation="attributes">
         <attribute name="margin">30px</attribute>
     </t>
@@ -17,7 +17,7 @@
           Customer/Table No.<t t-esc="receipt.customer_table"/>
         </t>
   </t>
-</t>
+</t> -->
 
 
 <t t-extend="Chrome">
@@ -316,6 +316,14 @@
             </button>
     </t>
     </t>
+
+     <t t-extend="OrderChangeReceipt">
+           <t t-jquery="div:first" t-operation="after">
+              <t t-if="changes.customer_table">
+                <t t-esc="changes.customer_table"/>
+              </t>
+          </t>
+     </t>
    
 
   <t t-extend="PaymentScreenWidget">
