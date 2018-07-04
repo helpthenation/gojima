@@ -306,7 +306,7 @@
            <attribute name="class">oe_hidden</attribute>
           </t>
           <t t-jquery="button.pay" t-operation="after">
-          <textarea autofocus="autofocus" type="text"  placeholder="Customer/Table No." style="width: 163px;height: 37px; !important" name="js_customer_table" required=""/>
+          <textarea autofocus="autofocus" type="text"  placeholder="Customer/Table No." style="width: 163px;height: 37px;font-size: 18px; !important" name="js_customer_table"/>
           <button t-attf-class='button js_check_dine #{ 
           widget.pos.get_order().get_dine_in_status() ? "highlight" : ""}' style="width:50%;float:left; !important">
            <i class='fa fa-building' /> Dine-in
