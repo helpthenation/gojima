@@ -6,7 +6,7 @@
 
 	<t t-name="SessionReportButtonWidget">
         <div class='control-button'>
-            <i class="fa fa-print"/>Print Session Summary
+            <!-- <i class="fa fa-print"/> -->Summary
         </div>
     </t>
 

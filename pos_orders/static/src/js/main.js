@@ -175,17 +175,36 @@ odoo.define('pos_orders.pos_orders',function(require){
     });
     gui.define_screen({name: 'wk_order',widget:OrdersScreenWidget});
 
-    screens.ProductScreenWidget.include({
-        show: function(){
+    var AllordersButton = screens.ActionButtonWidget.extend({
+        template: 'AllordersButton',
+        init: function(parent, options) {
+            options = options || {};
+            this._super(parent, options);
+        },
+        renderElement: function() {
             var self = this;
             this._super();
-            this.product_categories_widget.reset_category();
-            this.numpad.state.reset();
-            $('#all_orders').on('click',function(){
-                self.gui.show_screen('wk_order',{});
+            this.$el.click(function() {
+               self.gui.show_screen('wk_order',{});
             });
         },
+        });
+    screens.define_action_button({
+        'name': 'AllordersButton',
+        'widget': AllordersButton,
     });
+
+    // screens.ProductScreenWidget.include({
+    //     show: function(){
+    //         var self = this;
+    //         this._super();
+    //         this.product_categories_widget.reset_category();
+    //         this.numpad.state.reset();
+    //         $('#all_orders').on('click',function(){
+    //             self.gui.show_screen('wk_order',{});
+    //         });
+    //     },
+    // });
     screens.ClientListScreenWidget.include({
         show: function() {
             var self = this;
@@ -198,4 +217,6 @@ odoo.define('pos_orders.pos_orders',function(require){
         }
     });
     return OrdersScreenWidget;
+
+
 });

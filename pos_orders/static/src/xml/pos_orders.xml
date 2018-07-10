@@ -4,13 +4,18 @@
 <!-- License URL : <https://store.webkul.com/license.html/> -->
 <templates id="template" xml:space="preserve">
 
-	<t t-extend="ActionpadWidget">  
+	<!-- <t t-extend="ActionpadWidget">  
 		<t t-jquery=".actionpad" t-operation="before">
-			<span class="control-button" id="all_orders" style="width: 384px;margin-right: 5px;margin-top: 3px;margin-bottom: -7px;">
-				All Orders
-			</span>
+			<span class="control-button" id="all_orders" style="width: 384px;margin-right: 5px;margin-top: 3px;margin-bottom: -7px;">All Orders</span>
 		</t>	
-	</t>
+	</t> -->
+
+    <t t-name="AllordersButton">
+        <span class="control-button order-all_orders" id="all_orders">
+           <!-- <i class="fa fa-male"></i> -->
+           Previous Order
+        </span>
+    </t>
 
 	<t t-name="OrdersScreenWidget">        
     	<div class="clientlist-screen screen">

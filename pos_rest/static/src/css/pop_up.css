@@ -181,5 +181,8 @@ input:checked + .slider:before {
 }
 
 .pos .numpad button{
-  height:69px !important;
+  height:54px !important;
+}
+.pos .actionpad .button.pay {
+    height: 122px;
 }
