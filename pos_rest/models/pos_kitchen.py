@@ -47,7 +47,8 @@ class PosOrder(models.Model):
     def search_kitchen_recall_state(self):
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
-        for record in self.search([('kitchen_state','=','delivered'),('date_order','>=',last_day.strftime(DF))]):
+        pos_session = self.env['pos.session'].search([('state', '=', 'opened')])
+        for record in self.search([('kitchen_state','=','delivered'),('date_order','>=',last_day.strftime(DF)),('session_id','in',pos_session.ids)]):
             single_list = []
             id = record.id
             format_date = fields.Datetime.from_string(record.date_order)
@@ -76,7 +77,8 @@ class PosOrder(models.Model):
     def search_kitchen_state(self):
         last_day = fields.Date.from_string(fields.Date.today()) - timedelta(days=1)
         multiple_list = []
-        for record in self.search([('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF))]):
+        pos_session = self.env['pos.session'].search([('state', '=', 'opened')])
+        for record in self.search([('kitchen_state','=','to_delivery'),('date_order','>=',last_day.strftime(DF)),('session_id','in',pos_session.ids)]):
             single_list = []
             id = record.id
             kitchen_state = record.kitchen_state
