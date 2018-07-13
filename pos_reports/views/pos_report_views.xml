@@ -9,7 +9,6 @@
                 <group name="pos_extra">
                     <field name="amount_tax_order"/>
                     <field name="amount_total_order"/>
-                    <field name="avg_tran_value"/>
                 </group>
             </group>
         </field>
@@ -35,10 +34,10 @@
         <field name="arch" type="xml">
             <search string="Point of Sale Analysis">
                 <field name="date"/>
-                <filter string="Hour" context="{'group_by':'date:hour'}"/>
                 <filter string="Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="POS orders created during the current year"/>
                 <separator/>
                 <group expand="1" string="Group By">
+                    <filter string="Hour" context="{'group_by':'date:hour'}"/>
                     <filter string="Order Month" context="{'group_by':'date:month'}" help="Month of order date"/>
                 </group>
             </search>
@@ -62,14 +61,15 @@
         <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
     </record>
 
-    <menuitem id="menu_gojima_report_pos_order_all" name="Dashboard" action="action_gojima_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="1"/>
+    <menuitem id="menu_gojima_report_pos_order_all" name="POS Analysis" action="action_gojima_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="1"/>
 
     <record id="view_gojima_count_report_pos_order_pivot" model="ir.ui.view">
         <field name="name">gojima.count.report.pos.order.pivot</field>
         <field name="model">gojima.count.report.pos.order</field>
         <field name="arch" type="xml">
-            <pivot string="POS Analysis" disable_linking="True">
+            <pivot string="POS Transaction" disable_linking="True">
                 <field name="date" interval="hour" type="row"/>
+                <field name="product_qty" type="measure"/>
                 <field name="tran_count" type="measure"/>
             </pivot>
         </field>
@@ -92,11 +92,22 @@
         <field name="arch" type="xml">
             <search string="Point of Sale Analysis">
                 <field name="date"/>
-                <filter string="Hour" context="{'group_by':'date:hour'}"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="product_id"/>
+                <filter string="Top 10 Products" domain="[('id','!=',False)]" context="{'top_25': True}"/>
                 <filter string="Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="POS orders created during the current year"/>
-                <separator/>
+                <filter string="My Sales" help="My Sales" domain="[('user_id','=',uid)]"/>
                 <group expand="1" string="Group By">
-                    <filter string="Order Month" context="{'group_by':'date:month'}" help="Month of order date"/>
+                    <filter string="By Hour" context="{'group_by':'date:hour'}" help="Hour of order date"/>
+                    <!-- <filter string="By Day" context="{'group_by':'date:day'}" help="Day of order date"/>
+                    <filter string="By Week" context="{'group_by':'date:week'}" help="Week of order date"/>
+                    <filter string="By Month" context="{'group_by':'date:month'}" help="Month of order date"/>
+                    <filter string="By Quarter" context="{'group_by':'date:quarter'}" help="Quarter of order date"/>
+                    <filter string="By Year" context="{'group_by':'date:year'}" help="Year of order date"/> -->
+                    <separator/>
+                    <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Product" context="{'group_by':'product_id'}"/>
                 </group>
             </search>
         </field>
@@ -110,7 +121,7 @@
     </record>
 
     <record id="action_gojima_count_report_pos_order_all" model="ir.actions.act_window">
-        <field name="name">POS Analysis</field>
+        <field name="name">POS Transaction</field>
         <field name="res_model">gojima.count.report.pos.order</field>
         <field name="view_type">form</field>
         <field name="view_mode">pivot,graph</field>
@@ -119,6 +130,6 @@
         <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
     </record>
 
-    <menuitem id="menu_count_gojima_report_pos_order_all" name="POS Count" action="action_gojima_count_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="2"/>
+    <menuitem id="menu_count_gojima_report_pos_order_all" name="POS Transaction" action="action_gojima_count_report_pos_order_all" parent="point_of_sale.menu_point_rep" sequence="2"/>
 
 </odoo>

@@ -10,13 +10,14 @@
     'summary': 'Restaurant ',
     'description': """
 """,
-    'depends': ['point_of_sale'],
+    'depends': ['pos_restaurant'],
     'website': 'https://www.odoo.com/page/point-of-sale',
     'data': [
         'security/ir.model.access.csv',
         'views/assets.xml',
         'views/product_extra.xml',
-        'views/pos_kitchen.xml',
+        'views/pos_order.xml',
+        'views/pos_config.xml',
     ],
     'qweb': [
         'static/src/xml/custom_pos.xml',

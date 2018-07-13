@@ -1,83 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-	<!-- <t t-name="KitchenButton">
-		<div class="control-button view-kitchen">
-			<i class="fa fa-tag"/>View kitchen</div>
-	</t> -->
-	
+	<!-- <t t-name="KitchenButton"><div class="control-button view-kitchen"><i class="fa fa-tag"/>View kitchen</div></t>-->
 	<t t-name="KitchenOrderline">
-
-		<div class="pos-sale-ticket" >
-              <t t-as="items" t-foreach="line || {}">
-			<div class="pos-center-align">
-				<strong>
-				<i class="fa fa-clock-o"/>
-				<!-- <t t-esc="items_value[0]" /> -->
-				<span><t t-esc="items_value[0] and items_value[0].split(' ')[1] or False"/></span>
-			   </strong>
-			   <br/>	
-                <i class="fa fa-user"/>
-				<t t-esc="items_value[2]"/> 
-			   	
-			</div>
-			<button class="button kitchen_state_change highlight"  t-att-data-id="items" style="background: #63d08c9 !important;
-              border:1px solid #63d08c9 !important;
-              margin:auto !important ;display:block !important;margin-top:10px !important;">Deliver
+		<div class="pos-sale-ticket" id="kitchen">
+			<t t-as="items" t-foreach="line || {}">
+				<div class="pos-center-align">
+					<strong>
+						<i class="fa fa-clock-o"/>
+						<!-- <t t-esc="items_value[0]" />-->
+						<span>
+							<t t-esc="items_value[0] and items_value[0].split(' ')[1] or False"/>
+						</span>
+						<span class="oe_hidden" id="duration">
+							<t t-esc="items_value[0]"/>
+						</span>
+						<span id="timer"/>
+					</strong>
+					<br/>
+					<i class="fa fa-user"/>
+					<t t-esc="items_value[2]"/>
+					<t t-if="items_value[4]">Dine-in
+				</t>
+					<t t-if="items_value[5]">Take away
+				</t>
+				  <t t-if="items_value[6]">
+				  	Customer/Table :<t t-esc="items_value[6]"/>
+				</t>
+				</div>
+				<button class="button kitchen_state_change highlight" style="background: #63d08c9 !important;               border:1px solid #63d08c9 !important;               margin:auto !important ;display:block !important;margin-top:10px !important;" t-att-data-id="items">Deliver
 		   </button>
-			<!-- <br/> -->
-			<div  class="ribbon">
-				<span class="ribbon-content">Kitchen Order</span>
-			</div>
-			<t t-if="items_value[3]">
-				<span style="color: #003fff;">Note: This order has been recalled.</span>
-			</t>
-			<!-- <br/> -->
-			<table class="receipt-orderlines">
-				<colgroup>
-					<col width="75%"/>
-					<col width="25%"/>
-				</colgroup>
-				
-				<t t-as="product_list" t-foreach="items_value[4] || {}">
-					<t t-as="product_list_line" t-foreach="product_list_value || []">
-						<tr>
-						<td>
-					<t t-esc="product_list_line[0]"/>
-					<t t-if="product_list_line[2]">
-						<!-- <span>with</span> -->
-					<div class="pos-disc-font"> 
-						<t t-as="product_list_dict" t-foreach="product_list_line[2] || {}">
-							<t t-as="product_list_dict_line" t-foreach="product_list_dict || []">
-						    <span> - </span><t t-esc="product_list_dict_line"/>
-                               <!-- <t t-esc="product_list_dict_line_value[0]"/> -->
-						       <br/>
+				<t t-if="items_value[3]">
+					<span style="color: #003fff;">Note: This order has been recalled.</span>
+					<br/>
+				</t>
+
+				<t t-set="listdata" t-value="['Mains','Sides','Desserts','Uncategorized']"/>		
+                <t t-as="list" t-foreach="listdata">
+				<table class="receipt-orderlines">
+					<colgroup>
+						<col width="20%"/>
+						<col width="80%"/>
+					</colgroup>
+					<t t-as="product_list" t-foreach="items_value[7] || {}">
+						<t t-set="counter" t-value="1"/>
+						<t t-as="product_list_line" t-foreach="product_list_value || []">
+							<t t-if="list == product_list_line[3]">
+								<t t-if="counter">
+								  <t t-esc="list"/>
+								</t>
+                            	<t t-set="counter" t-value="0"/>
+							<tr>
+								<td>
+									<t t-esc="product_list_line[1]"/>
+								</td>
+								<td>
+									<t t-esc="product_list_line[0]"/>
+									<t t-if="product_list_line[2]">
+										<div class="pos-disc-font">
+											<t t-as="product_list_dict" t-foreach="product_list_line[2] || {}">
+												<t t-as="product_list_dict_line" t-foreach="product_list_dict || []">
+													<span>- </span>
+													<t t-esc="product_list_dict_line"/>
+													<!-- <t t-esc="product_list_dict_line_value[0]"/>-->
+													<br/>
+												</t>
+											</t>
+										</div>
+									</t>
+								</td>
+							</tr>
+						</t>
+						</t>
 					</t>
-					    </t>
-					</div>
-				    </t>
-				</td>
-				<td>
-					<t t-esc="product_list_line[1]"/>
-				</td>
-			</tr>
-                 </t>
-				</t>			   
-			</table>
-			<br/>
-		</t>
+				</table>
+				<br/>
+                </t>
+			</t>
 		</div>
 	</t>
 	<t t-name="KitchenScreen">
 		<div class="splitbill-screen screen">
-			<div class="full-content">
+			<div class="full-content" id="modified">
 				<div class="top-content">
-					<!-- <span class="button back highlight">
-						<i class="fa fa-angle-double-left"/>Back</span> -->
-						<h1>Kitchen Screen</h1>
-					<span class="button next highlight">
-						View Recall Orders<!-- <i class="fa fa-angle-double-right"/> -->
-					</span>
-					<!-- <h1>Kitchen</h1> -->
+					<!-- <span class="button back highlight"><i class="fa fa-angle-double-left"/>Back</span>-->
+					<!-- <h1>Kitchen Screen</h1>-->
+					<span class="button next highlight">View Recall Orders
+						
+						<!-- <i class="fa fa-angle-double-right"/>--></span>
+					<!-- <h1>Kitchen</h1>-->
 				</div>
 				<div class="screen left-content">
 					<table>
@@ -93,7 +103,4 @@
 			</div>
 		</div>
 	</t>
-
-	
-
 </templates>

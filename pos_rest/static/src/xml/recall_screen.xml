@@ -5,7 +5,7 @@
 			<i class="fa fa-tag"/>Recall orders</div>
 	</t> -->
 	<t t-name="RecallOrderLine">
-		<div class="pos-sale-ticket">
+		<div class="pos-sale-ticket" id="kitchen">
 			<t t-as="items" t-foreach="line || {}">
 			<div class="pos-center-align">
 				<strong>
@@ -15,28 +15,37 @@
 			   
 				<br/>			
                 <i class="fa fa-user"/>
-				<t t-esc="items_value[2]"/>   
+				<t t-esc="items_value[2]"/>
+				<t t-if="items_value[4]">
+				   Dine-in
+				</t>
+				<t t-if="items_value[5]">
+				   Take away
+				</t>   
 			</div>
 			<button class="button recall_state_change highlight" t-att-data-id="items" style="background: #6EC8E1 !important;border:1px solid #6EC8E1 !important;margin:auto !important;display:block !important;margin-top:10px !important;">
 					Recall   
 				</button>
 			<!-- <br/> -->
-			<div  class="ribbon">
+			<!-- <div  class="ribbon">
 				<span class="ribbon-content">Recall Order</span>
-			</div>
+			</div> -->
 
 			<!-- <br/> -->
 			
 			<table class="receipt-orderlines">
 				<colgroup>
-					<col width="75%"/>
-					<col width="25%"/>
+					<col width="20%"/>
+					<col width="80%"/>
 				</colgroup>
 				
-				<t t-as="product_list" t-foreach="items_value[4] || {}">
+				<t t-as="product_list" t-foreach="items_value[6] || {}">
 					<t t-as="product_list_line" t-foreach="product_list_value || []">
 						<tr>
-						<td>
+							<td >
+					<t t-esc="product_list_line[1]"/>
+				           </td>
+						<td >
 					<t t-esc="product_list_line[0]"/>
 					<t t-if="product_list_line[2]">
 						<!-- <span>with</span> -->
@@ -51,9 +60,7 @@
 					</div>
 				    </t>
 				</td>
-				<td>
-					<t t-esc="product_list_line[1]"/>
-				</td>
+				
 			</tr>
                  </t>
 				</t>			   

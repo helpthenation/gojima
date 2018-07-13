@@ -14,7 +14,8 @@ ul.wk_tabs li::before {
 content: "" !important;
 }
 .tab-content {
-    max-height: 550px;
+   /* max-height: 550px;*/
+    max-height: 312px;
     overflow-y: scroll;
     border-top: 3px solid #ededed;
     border-bottom: 3px solid #ededed;
@@ -22,6 +23,11 @@ content: "" !important;
     background: #ededed;
     padding: 15px;
 
+
+}
+
+.pos .popup .body {
+    overflow: hidden;
 }
 .tab-content.current {
     display: inherit;
@@ -40,15 +46,7 @@ content: "" !important;
     font-size: initial;
     font-weight: normal;
 }
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-.switch input {
-    display: none;
-}
+
 .check_box {
     background-color: rgb(204, 204, 204);
     border-bottom-left-radius: 34px;
@@ -153,58 +151,38 @@ input:checked + .slider:before {
 .pos .popup input, .pos .popup-input {
   display:none;
 }
-.ribbon {
- font-size: 12px !important;
- /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
-
- width: 50%;
-    
- position: relative;
- background: #ba89b6;
- color: #fff;
- text-align: center;
- padding: 1em 2em; /* Adjust to suit */
- margin: 2em auto 3em; /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
-}
-.ribbon:before, .ribbon:after {
- content: "";
- position: absolute;
- display: block;
- bottom: -1em;
- border: 1.5em solid #986794;
- z-index: -1;
-}
-.ribbon:before {
- left: -2em;
- border-right-width: 1.5em;
- border-left-color: transparent;
-}
-.ribbon:after {
- right: -2em;
- border-left-width: 1.5em;
- border-right-color: transparent;
-}
-.ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
- content: "";
- position: absolute;
- display: block;
- border-style: solid;
- border-color: #804f7c transparent transparent transparent;
- bottom: -1em;
-}
-.ribbon .ribbon-content:before {
- left: 0;
- border-width: 1em 0 0 1em;
-}
-.ribbon .ribbon-content:after {
- right: 0;
- border-width: 1em 1em 0 0;
-}
-.pos .pos-sale-ticket{
-  width:244px !important;
-  height:425px !important;
+#kitchen {
+  width:225px !important;
+  height:225px !important;
   font-size: 18px !important;
+  overflow-y: auto;
+  margin-right:20px !important;
+  margin-left:20px !important;
 }
 .pos .pos-disc-font {
   font-size: 14px !important;
+}
+.pos *::-webkit-scrollbar {
+    width: 18px !important;
+    height: 20px !important;
+    
+
+    /*overflow: auto !important;*/
+}
+#modified{
+    top: -9px !important;
+}
+.pos .pos-sale-ticket{
+  margin-right:40px !important;
+  margin-left:40px !important;
+}
+.pos_underline{
+  text-decoration: underline;
+}
+
+.pos .numpad button{
+  height:54px !important;
+}
+.pos .actionpad .button.pay {
+    height: 122px;
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+		<record id="allow_only_own_pos" model="ir.rule">
+		            <field name="name">Allowed only own POS</field>
+		            <field ref="point_of_sale.model_pos_config" name="model_id"/>
+		            <field name="domain_force">[('pos_user_id','=',user.id)]</field>
+		</record>
+ </data>
+</odoo>
