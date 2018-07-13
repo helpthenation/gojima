@@ -17,11 +17,12 @@ odoo.define('pceft_odoo_integration.pceft_integration', function(require) {
             var journals = self.pos.journals;
             var amount = self.pos.get_order().get_due();
             var is_creditcard_journal = _.find(journals, function(jnl){
+                
                                                                        return jnl.id==id && jnl.is_creditcard_journal === true;});
             
 
             if(is_creditcard_journal){
-                $.ajax('http://127.0.0.1:5000?'+amount+'&purchase').then(function(result) {
+                $.ajax({url:'http://127.0.0.1:5000?'+amount+'&purchase',crossDomain: true}).then(function(result) {
                     var result = JSON.parse(result)
                     if(result['Response']['ResponseStatus'] != "FALSE"){
                         arguments[0] = id;
