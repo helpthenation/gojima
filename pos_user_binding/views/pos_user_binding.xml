@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="pos_config_view_form_user_binding" model="ir.ui.view">
+            <field name="name">pos.config.form</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]" position="after">
+                    <div class="user" id="user">
+                        <label for="pos_user_id" class="oe_edit_only"/>
+                        <field name="pos_user_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_partner_form_view" model="ir.ui.view">
+        <field name="name">res.partner.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="lang" position="after">
+                <field name="is_pos_salesman"/>
+            </field>
+            <!--  <notebook position="inside"><page string="Point of Sale" attrs="{'invisible': [('is_pos_salesman', '=', False)] }"><group><field name="pos_security_pin_partner" /></group></page></notebook>-->
+        </field>
+    </record>
+    <record id="pos_config_view_saleperson_form" model="ir.ui.view">
+        <field name="name">pos.config</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <div id="category_reference" position="inside">
+                <div class="o_setting_right_pane">
+                    <div class="content-group">
+                        <div class="mt16">
+                            <label class="o_light_label" for="sale_person_ids" string="Sale Person"/>
+                            <field name="sale_person_ids" widget="many2many_tags"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_pos_pos_form_saleperson" model="ir.ui.view">
+        <field name="name">POS orders</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="string">Cashier</attribute> 
+            </field>
+            <field name="user_id" position="after">
+                <field name="sale_person_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_pos_tree_saleperson" model="ir.ui.view">
+        <field name="name">POS orders</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="string">Cashier</attribute> 
+            </field>
+            <field name="user_id" position="after">
+                <field name="sale_person_id"/>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

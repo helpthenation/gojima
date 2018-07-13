@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <t t-name="SalesmanButton">
+        <span class="control-button order-salesman">
+           <!-- <i class="fa fa-male"></i> -->
+            <span class="username">
+               <t t-esc="widget.get_name()" />
+            </span>
+        </span>
+    </t>
+
+    <t t-extend="PosTicket">
+      <t t-jquery="t[t-esc='order.name']" t-operation="after">
+       <t t-if="order.get_sale_person_name()">
+              Sale Person :<t t-esc="order.get_sale_person_name()"/>
+        </t>
+       </t>
+    </t>
+    
+</templates>

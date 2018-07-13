@@ -1,45 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-
-    <record id="view_pos_line_form_extra" model="ir.ui.view">
-          <field name="name">POS orders</field>
-          <field name="model">pos.order.line</field>
-          <field name="inherit_id" ref="point_of_sale.view_pos_order_line_form"/>
-          <field name="arch" type="xml">
-            <xpath expr="//field[@name='product_id']" position="after">
-                <field name="extra_notes"/>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="view_pos_line_tree_extra" model="ir.ui.view">
-      <field name="name">POS orders</field>
-      <field name="model">pos.order.line</field>
-      <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
-      <field name="arch" type="xml"> 
-        <xpath expr="//field[@name='product_id']" position="after">
-            <field name="extra_notes"/>
-        </xpath>
-    </field>
-    </record>
-
-    <record id="view_pos_pos_form_extra" model="ir.ui.view">
-          <field name="name">POS orders</field>
-          <field name="model">pos.order</field>
-          <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
-          <field name="arch" type="xml">
-            <field name="name" position="after">
-            <field name="kitchen_state"/>
-        </field>
-            <xpath expr="//field[@name='lines']//form//field[@name='product_id']" position="after">
-                <field name="extra_notes"/>
-            </xpath>
-            <xpath expr="//field[@name='lines']//tree/field[@name='product_id']" position="after">
-                <field name="extra_notes"/>
-            </xpath>
-        </field>
-    </record>
-
+<odoo>   
     <record id="view_product_extra_form_normal" model="ir.ui.view">
         <field name="name">product.product</field>
         <field name="model">product.product</field>
@@ -47,17 +7,16 @@
         <field name="arch" type="xml">
             <field name="barcode" position="after">
                 <field name="visibility_in_pos"/>
+                <field name="kitchen_name"/>
             </field>
         </field>
     </record>
-
-	<record id="view_product_extra_tree" model="ir.ui.view">
+    <record id="view_product_extra_tree" model="ir.ui.view">
         <field name="name">product.extra.tree</field>
         <field name="model">product.extra</field>
         <field name="arch" type="xml">
             <tree string="Extra's">
-                <field name="name" />
-                <!-- <field name="choice"/> -->
+                <field name="name"/>
             </tree>
         </field>
     </record>
@@ -67,130 +26,53 @@
         <field name="arch" type="xml">
             <form string="Extra's">
                 <sheet>
-                	<div class="oe_title">
-                		<group>
-                          <group>
-                            <h1>
-                                <field name="name"/>
-                            </h1>
+                    <div class="oe_title">
+                        <group>
+                            <group>
+                                <h1>
+                                    <field name="name"/>
+                                </h1>
+                            </group>
                         </group>
+                    </div>
+                    <group string="Extra's">
+                        <field name="extra_line" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id" options="{'no_create': True}"/>
+                                <field name="kitchen_name"/>
+                                <field name="internal_refer" string="Internal Reference"/>
+                                <field invisible="1" name="qty_on_hand"/>
+                                <field invisible="1" name="forecasted_qty"/>
+                                <field name="public_price"/>
+                            </tree>
+                        </field>
                     </group>
-                </div>
-                <group string="Extra's">                
-                <field name="extra_line" nolabel="1">
-                    <tree editable="bottom" > 
-                        <field name="product_id" options="{'no_create': True}"/>                              
-                        <field name="internal_refer" string="Internal Reference"/>                             
-                        <field name="qty_on_hand" invisible="1"/>                              
-                        <field name="forecasted_qty" invisible="1"/>                             
-                        <field name="public_price"/>                              
-                    </tree>
-                </field>
-            </group>
-            </sheet>
-        </form>
-    </field>
-</record>
-
-<record id="action_product_extra" model="ir.actions.act_window">
-    <field name="name">Extra's</field>
-    <field name="type">ir.actions.act_window</field>
-    <field name="res_model">product.extra</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">tree,form</field>
-    <field name="help" type="html">
-        <p class="oe_view_nocontent_create">
-            Create Product Extra Addons.
-        </p>
-    </field>
-</record>
-
-<menuitem id="menu_product_extra"
-    name="Extra's"
-    action="action_product_extra"
-    parent="point_of_sale.pos_config_menu_catalog"
-    sequence="2" />
-
-    <record model="ir.ui.view" id="view_pos_order_kitchen_kanban">
-        <field name="name">pos.order.kanban</field>
-        <field name="model">pos.order</field>
-        <field name="arch" type="xml">
-            <kanban default_group_by="kitchen_state" class="kitchen_kanban">
-                <field name="name"/>
-                <field name="user_id"/>
-               
-                <field name="date_order"/>
-                <field name="kitchen_state"/>
-                <field name="pos_reference"/>
-                <field name="session_id"/>
-                <field name="state"/>
-                <field name="lines"/>
-                <templates>
-                       
-                        <t t-name="kanban-box">
-                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">                                
-                                <div class="oe_kanban_content">
-                                    <div class="row">
-                                        <div class="col-xs-8">
-                                            <strong class="o_kanban_record_title"><field name="name"/></strong>
-                                        </div>
-                                        <div class="col-xs-4">
-                                           <span><t t-esc="record.date_order.value and record.date_order.value.split(' ')[1] or False"/></span>
-                                           <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                     <t t-if="record.kitchen_state.raw_value == 'to_delivery'">
-                                        <button class="btn btn-primary" name="move_next" type="object">
-                                            <span>Delivered</span>
-                                        </button>
-                                        </t>
-                                        <t t-if="record.kitchen_state.raw_value =='delivered'">
-                                        <button class="btn btn-danger" name="move_back" type="object">
-                                         <span>To Delivery</span>
-                                        </button>
-                                        </t>
-                                    </div>
-                                    </div>
-                                    <div class="text-muted o_kanban_record_subtitle">
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <span><t t-esc="record.session_id.value"/></span>
-                                            </div>
-                                             <div class="col-xs-4">
-                                           <!--  <span><t t-esc="record.kitchen_state.value"/></span> -->
-                                       
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="o_kanban_record_bottom">
-                                    <t t-foreach="record.lines" t-as="line">
-                                           <!-- <t t-esc="line.product_id.value"/>
-                                           <t t-esc="line.qty.value"/> -->
-                                        </t> 
-                                        
-                                    </div>
-                                </div>
-                                <div class="oe_clear"></div>
-                            </div>
-                        </t>
-                    </templates>
-            </kanban>
+                </sheet>
+            </form>
         </field>
     </record>
-
-    <record id="action_pos_pos_form_kitchen" model="ir.actions.act_window">
-        <field name="name">Kitchen</field>
+    <record id="action_product_extra" model="ir.actions.act_window">
+        <field name="name">Extra's</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">pos.order</field>
+        <field name="res_model">product.extra</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban</field>
-        <field name="view_id" eval="view_pos_order_kitchen_kanban"/>
-        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create Product Extra Addons.
+        </p>
+        </field>
     </record>
+    <menuitem action="action_product_extra" id="menu_product_extra" name="Extra's" parent="point_of_sale.pos_config_menu_catalog" sequence="2"/>
 
-    <menuitem id="menu_point_ofsale_kitchen" parent="point_of_sale.menu_point_of_sale" action="action_pos_pos_form_kitchen" sequence="3" />
+    <record id="pos_rest_product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="pos_categ_id"/>
+            </field>
+        </field>
+    </record>
 
 </odoo>
