@@ -22,7 +22,7 @@ odoo.define('pceft_odoo_integration.pceft_integration', function(require) {
             
 
             if(is_creditcard_journal){
-                $.ajax('https://cors-anywhere.herokuapp.com/http://127.0.0.1:5000?'+amount+'&purchase').then(function(result) {
+                $.ajax('http://127.0.0.1:5000?'+amount+'&purchase').then(function(result) {
                     var result = JSON.parse(result)
                     if(result['Response']['ResponseStatus'] != "FALSE"){
                         arguments[0] = id;
