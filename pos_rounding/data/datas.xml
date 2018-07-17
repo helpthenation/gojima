@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- noupdate="1" -->
-    <data>
+    <data noupdate="1">
         <record id="pos_rounding_payment_journal" model="account.journal">
             <field name="name">Rounding</field>
             <field name="code">RR</field>
