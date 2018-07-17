@@ -225,13 +225,19 @@ odoo.define('pos_debt_notebook.pos', function (require) {
                     self.pos.gui.show_screen('clientlist');
                 }, 30);
             }
-
+            // debugger;
             var newPaymentline = new models.Paymentline({},{order: this, cashregister: cashregister, pos: this.pos});
             if (cashregister.journal.debt){
                 newPaymentline.set_amount(this.get_due_debt());
-            } else if (cashregister.journal.type !== 'cash' || this.pos.config.iface_precompute_cash){
-                newPaymentline.set_amount(this.get_due());
             }
+            else if (cashregister.journal.type === 'cash' && cashregister.journal_id[1] === 'Cash (AUD)'){
+                newPaymentline.set_amount(Math.round(this.get_due()*10)/10);
+            }
+            else if (cashregister.journal_id[1] === 'Rounding (AUD)' && cashregister.journal.type === 'cash'){
+                newPaymentline.set_amount(this.get_due());
+                
+            } 
+            
             this.paymentlines.add(newPaymentline);
             this.select_paymentline(newPaymentline);
         },
