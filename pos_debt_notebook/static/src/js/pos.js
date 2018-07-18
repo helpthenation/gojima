@@ -229,11 +229,29 @@ odoo.define('pos_debt_notebook.pos', function (require) {
             var newPaymentline = new models.Paymentline({},{order: this, cashregister: cashregister, pos: this.pos});
             if (cashregister.journal.debt){
                 newPaymentline.set_amount(this.get_due_debt());
-            } else if (cashregister.journal.type !== 'cash' || this.pos.config.iface_precompute_cash){
-                newPaymentline.set_amount(this.get_due());
+                this.repeat_payment(newPaymentline);
             }
+            else if (cashregister.journal.type === 'cash' && cashregister.journal_id[1] === 'Cash (AUD)'){
+                newPaymentline.set_amount(this.get_rounded());
+                this.repeat_payment(newPaymentline);
+            }
+            else if (cashregister.journal_id[1] === 'Rounding (AUD)' && cashregister.journal.type === 'cash'){
+                newPaymentline.set_amount(this.get_due());
+                this.paymentlines.add(newPaymentline);  
+            }
+            else {
+                newPaymentline.set_amount(this.get_due());
+                this.repeat_payment(newPaymentline);
+            }
+                
+        },
+        repeat_payment : function (newPaymentline) {
             this.paymentlines.add(newPaymentline);
             this.select_paymentline(newPaymentline);
+        },
+        get_rounded : function (){
+            var amount = this.get_due();
+            return Math.round((amount*10)/10);
         },
         get_due_debt: function(paymentline) {
             var due = this.get_total_with_tax() - this.get_total_paid();
