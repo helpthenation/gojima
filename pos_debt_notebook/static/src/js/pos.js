@@ -251,7 +251,22 @@ odoo.define('pos_debt_notebook.pos', function (require) {
         },
         get_rounded : function (){
             var amount = this.get_due();
-            return Math.round((amount*10)/10);
+            var value = amount.toFixed(2);
+            var output = value.split('.')[1][1];
+            if (output == '1' || output == '6'){
+                amount -= 0.01;
+            }
+            if (output == '2' || output == '7'){
+                amount -= 0.02;
+            }
+            if (output == '3' || output == '8'){
+                amount += 0.02;
+            }
+            if (output == '4' || output == '9'){
+                amount += 0.01;
+            }
+            return amount;
+            // return Math.round((amount*10)/10);
         },
         get_due_debt: function(paymentline) {
             var due = this.get_total_with_tax() - this.get_total_paid();
